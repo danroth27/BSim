@@ -14,7 +14,8 @@ jobs:
           lfs: true
 
       # Cache
-      - uses: actions/cache@v2
+      - name: Cache Library
+        uses: actions/cache@v2
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -29,14 +30,11 @@ jobs:
         with:
           targetPlatform: WebGL
 
-      # Output
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: build
-
       # Deploy
-      - uses: JamesIves/github-pages-deploy-action@4.1.8
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.8
         with:
           branch: gh-pages
-          folder: build
+          folder: build/WebGL/WebGL
+          commit-message: Deploy
+          single-commit: true
