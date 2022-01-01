@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RobotController : MonoBehaviour
@@ -15,6 +17,9 @@ public class RobotController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(0, 2.0f);
+        float speed = 2f;
+        float angularSpeed = 90f;
+        rb.velocity = transform.right * speed * Input.GetAxis("Vertical");
+        rb.angularVelocity = -Input.GetAxis("Horizontal") * angularSpeed;
     }
 }
