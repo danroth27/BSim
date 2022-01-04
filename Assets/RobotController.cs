@@ -11,7 +11,10 @@ public class RobotController : MonoBehaviour
     Collider2D robotCollider2D;
     Collider2D leftProximitySensorCollider2D;
     Collider2D rightProximitySensorCollider2D;
+    float vLeft;
+    float vRight;
 
+    public float RobotSpeed { get; set; } = 2f;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,28 +30,39 @@ public class RobotController : MonoBehaviour
     void FixedUpdate()
     {
         float speed = 2f;
-        float angularSpeed = 90f;
-        rb.velocity = transform.right * speed * Input.GetAxis("Vertical");
-        rb.angularVelocity = -Input.GetAxis("Horizontal") * angularSpeed;
+        var v = Input.GetAxis("Vertical");
+        var h= Input.GetAxis("Horizontal");
+
+
+        vLeft = speed * Math.Max(Math.Min(v + h, 1), -1);
+        vRight = speed * Math.Max(Math.Min(v - h, 1), -1);
+
+        rb.velocity = transform.right * (vLeft + vRight) / 2f;
+        rb.angularVelocity = (vRight - vLeft) * Mathf.Rad2Deg;
     }
 
-    void ExecuteRobotCommand(RobotCommand command)
+    public void ExecuteRobotCommand(RobotCommand command)
     {
 
     }
 
-    RobotSensors GetRobotSensors()
+    public RobotSensors GetRobotSensors()
     {
+        var contactPoints = new List<ContactPoint2D>();
+        robotCollider2D.GetContacts(contactPoints);
+        var bumping = contactPoints.Where(cp => Vector2.Dot(cp.normal, transform.right) < 0);
+
         return new RobotSensors
         {
-            IsBumping = robotCollider2D.IsTouchingLayers(),
+            IsBumping = bumping.Any(),
+            IsPushing = bumping.Any(cp => cp.rigidbody != null),
             LeftLightSensor = 0,
             RightLightSensor = 0,
-            LeftProximitySensor = leftProximitySensorCollider2D.IsTouchingLayers(),
-            RightProximitySensor = rightProximitySensorCollider2D.IsTouchingLayers(),
-            LeftWheelSpeed = 0,
-            RightWheelSpeed = 0,
-            TimeStep = Time.fixedTime
+            LeftProximitySensor = leftProximitySensorCollider2D.IsTouching(new ContactFilter2D { useTriggers = false }),
+            RightProximitySensor = rightProximitySensorCollider2D.IsTouching(new ContactFilter2D { useTriggers = false }),
+            LeftWheelSpeed = vLeft,
+            RightWheelSpeed = vRight,
+            TimeStep = Time.fixedTime,
         };
     }
 }
