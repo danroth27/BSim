@@ -21,10 +21,13 @@ public class ProximitySensorController : MonoBehaviour
         
     }
 
+    public bool IsTriggered { get; set; }
+
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (collider2D.isTrigger) return;
         spriteRenderer.color = Color.red;
+        IsTriggered = true;
     }
 
     private void OnTriggerExit2D(Collider2D collider2D)
@@ -36,5 +39,6 @@ public class ProximitySensorController : MonoBehaviour
         if (contacts.Any(c2d => !c2d.isTrigger)) return;
 
         spriteRenderer.color = Color.white;
+        IsTriggered = false;
     }
 }

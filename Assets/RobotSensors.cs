@@ -14,6 +14,6 @@ namespace BSim
         public bool IsPushing => IsBumping && BumperForce < 100f;
         public float LeftWheelSpeed { get; set; }
         public float RightWheelSpeed { get; set; }
-        public float TimeStep { get; set; }
+        public float Time { get; set; }
     }
 }

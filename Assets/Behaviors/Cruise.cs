@@ -8,16 +8,20 @@ namespace BSim.Behaviors
 {
     internal class Cruise : IBehavior
     {
-        public int LeftWheelSpeed { get; set; }
-        public int RightWheelSpeed { get; set; }
+        private readonly IArbiter arbiter;
 
-        public RobotCommand GetCommand(RobotSensors sensors)
+        public Cruise(IArbiter arbiter)
         {
-            return new RobotCommand 
-            { 
-                LeftWheelSpeed = LeftWheelSpeed, 
-                RightWheelSpeed = RightWheelSpeed 
-            };
+            this.arbiter = arbiter;
+        }
+
+        public float LeftWheelSpeed { get; set; } = RobotDefaults.Speed;
+        public float RightWheelSpeed { get; set; } = RobotDefaults.Speed;
+
+        public void Update(RobotSensors sensors)
+        {
+            var robotCommand = new RobotCommand(LeftWheelSpeed, RightWheelSpeed);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }

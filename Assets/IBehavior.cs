@@ -6,7 +6,7 @@ namespace BSim
 {
     public interface IBehavior
     {
-        RobotCommand GetCommand(RobotSensors sensors);
+        void Update(RobotSensors sensors);
     }
 
     public class Task

@@ -1,4 +1,5 @@
 using BSim;
+using BSim.Behaviors;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,72 +7,79 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class RobotController : MonoBehaviour
+public class RobotController : MonoBehaviour, IRobotController
 {
-    Rigidbody2D rb;
-    CircleCollider2D robotCollider2D;
-    Collider2D leftProximitySensorCollider2D;
-    Collider2D rightProximitySensorCollider2D;
-    float vLeft;
-    float vRight;
-
-    public float RobotSpeed { get; set; } = 2f;
+    private Rigidbody2D robotBody;
+    private CircleCollider2D robotCollider2D;
+    private ProximitySensorController leftProximitySensor, rightProximitySensor;
+    private float vLeft, vRight;
+    private IEnumerable<IBehavior> behaviors;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        robotBody = GetComponent<Rigidbody2D>();
         robotCollider2D = GetComponent<CircleCollider2D>();
-        var proximitySensorColliders = GetComponentsInChildren<Collider2D>();
-        leftProximitySensorCollider2D = proximitySensorColliders.First(c2d => c2d.name.Contains("Left"));
-        rightProximitySensorCollider2D = proximitySensorColliders.First(c2d => c2d.name.Contains("Right"));
+        var proximitySensors = GetComponentsInChildren<ProximitySensorController>();
+        leftProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Left"));
+        rightProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Right"));
+        var arbiter = new FixedPriorityArbiter(this);
+        behaviors = new IBehavior[]
+        {
+            new Cruise(arbiter),
+            new Escape(arbiter)
+            //new Remote(arbiter)
+        };
+        arbiter.SetBehaviorPrioritiesInOrder(behaviors);
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        float speed = 2f;
-        var v = Input.GetAxis("Vertical");
-        var h= Input.GetAxis("Horizontal");
-
-
-        vLeft = speed * Math.Max(Math.Min(v + h, 1), -1);
-        vRight = speed * Math.Max(Math.Min(v - h, 1), -1);
-
-        rb.velocity = transform.right * (vLeft + vRight) / 2f;
-        rb.angularVelocity = (vRight - vLeft) * Mathf.Rad2Deg;
+        var sensors = GetRobotSensors();
+        foreach (var behavior in behaviors)
+        {
+            behavior.Update(sensors);
+        }
     }
 
-    public void ExecuteRobotCommand(RobotCommand command)
-    {
+    public RobotCommand ExecutingRobotCommand { get; set; }
 
+    public void ExecuteRobotCommand(RobotCommand robotCommand)
+    {
+        vLeft = robotCommand.LeftWheelSpeed;
+        vRight = robotCommand.RightWheelSpeed;
+        robotBody.velocity = transform.right * (robotCommand.LeftWheelSpeed + robotCommand.RightWheelSpeed) / 2f;
+        robotBody.angularVelocity = (robotCommand.RightWheelSpeed - robotCommand.LeftWheelSpeed) * Mathf.Rad2Deg;
+        ExecutingRobotCommand = robotCommand;
     }
 
     public RobotSensors GetRobotSensors()
     {
+        // Bumper
         var contactPoints = new List<ContactPoint2D>();
         robotCollider2D.GetContacts(contactPoints);
-        var bumping = contactPoints.Where(cp => Vector2.Dot(cp.normal, transform.right) < 0);
+        var bumping = contactPoints.Any(cp => Vector2.Dot(cp.normal, transform.right) < 0);
         var bumperForce = Vector2.Dot(-transform.right, contactPoints.Aggregate(new Vector2(), (v, cp) => v + cp.normal * cp.normalImpulse));
-           
+
+        // Light sensors
         var lightSources = GameObject.FindGameObjectsWithTag("LightSource");
         var leftLightSensorPosition = transform.position + Quaternion.Euler(0, 0, 30) * transform.right * robotCollider2D.radius;
         var rightLightSensorPosition = transform.position + Quaternion.Euler(0, 0, -30) * transform.right * robotCollider2D.radius;
-
         float leftLightSensor = GetLightSensorValue(leftLightSensorPosition, lightSources);
         float rightLightSensor = GetLightSensorValue(rightLightSensorPosition, lightSources);
 
         return new RobotSensors
         {
-            IsBumping = bumping.Any(),
+            IsBumping = bumping,
             BumperForce = bumperForce,
             LeftLightSensor = leftLightSensor,
             RightLightSensor = rightLightSensor,
-            LeftProximitySensor = leftProximitySensorCollider2D.IsTouching(new ContactFilter2D { useTriggers = false }),
-            RightProximitySensor = rightProximitySensorCollider2D.IsTouching(new ContactFilter2D { useTriggers = false }),
+            LeftProximitySensor = leftProximitySensor.IsTriggered,
+            RightProximitySensor = rightProximitySensor.IsTriggered,
             LeftWheelSpeed = vLeft,
             RightWheelSpeed = vRight,
-            TimeStep = Time.fixedTime
+            Time = Time.time
         };
     }
 
