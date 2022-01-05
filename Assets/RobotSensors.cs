@@ -10,11 +10,10 @@ namespace BSim
         public bool LeftProximitySensor { get; set; }
         public bool RightProximitySensor { get; set; }
         public bool IsBumping { get; set; }
-        public bool IsPushing { get; set; }
+        public float BumperForce { get; set; }
+        public bool IsPushing => IsBumping && BumperForce < 100f;
         public float LeftWheelSpeed { get; set; }
         public float RightWheelSpeed { get; set; }
         public float TimeStep { get; set; }
-        public float AngularVelocity { get; set; }
-        public float Velocity { get; set; }
     }
 }

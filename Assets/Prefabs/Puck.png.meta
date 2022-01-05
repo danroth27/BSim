@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3edd2944aab02584e93cb13cef28b004
+guid: 9ee8b07a22c692a4ab0fc4ac424c1b9f
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -36,8 +36,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 1
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -147,7 +147,7 @@ TextureImporter:
       spriteID: 18d3544e99f608ed0800000000000000
       internalID: -2413806693520163455
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     outline:
@@ -168,13 +168,13 @@ TextureImporter:
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+  spritePackingTag:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
