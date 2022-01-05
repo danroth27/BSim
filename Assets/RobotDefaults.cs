@@ -9,6 +9,6 @@ namespace BSim
 {
     internal static class RobotDefaults
     {
-        public const float Speed = 2f;
+        public static float Speed { get; set; } = 2f;
     }
 }

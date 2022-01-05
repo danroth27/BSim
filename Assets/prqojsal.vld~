@@ -27,7 +27,7 @@ public class RobotController : MonoBehaviour, IRobotController
         behaviors = new IBehavior[]
         {
             new Cruise(arbiter),
-            new Avoid(arbiter),
+            new Avoid(arbiter) { Gain = -1f },
             new Escape(arbiter)
             //new Remote(arbiter)
         };

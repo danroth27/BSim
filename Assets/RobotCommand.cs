@@ -20,10 +20,16 @@ namespace BSim
         public bool Equals(RobotCommand robotCommand) =>
             robotCommand.LeftWheelSpeed == LeftWheelSpeed && robotCommand.RightWheelSpeed == RightWheelSpeed;
 
-        public static RobotCommand Spin(float speed = RobotDefaults.Speed) =>
+        public static RobotCommand Spin(float speed) =>
             new RobotCommand { LeftWheelSpeed = -speed, RightWheelSpeed = speed };
 
-        public static RobotCommand Straight(float speed = RobotDefaults.Speed) =>
+        public static RobotCommand Spin() => Spin(RobotDefaults.Speed);
+
+        public static RobotCommand Straight(float speed) =>
             new RobotCommand { LeftWheelSpeed = speed, RightWheelSpeed = speed };
+
+        public static RobotCommand Straight() => Straight(RobotDefaults.Speed);
+
+        public const RobotCommand NoCommand = null;
     }
 }

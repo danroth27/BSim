@@ -63,7 +63,7 @@ namespace BSim.Behaviors
                 if (sensors.Time > startTime + ForwardTime)
                 {
                     state = State.Start;
-                    arbiter.ExecuteRobotCommand(null, this);
+                    arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
                 }
             }
         }
