@@ -26,13 +26,16 @@ public class RobotController : MonoBehaviour, IRobotController
         var arbiter = new FixedPriorityArbiter(this);
         behaviors = new IBehavior[]
         {
-            new Cruise(arbiter),
-            new Avoid(arbiter),
+            new London(arbiter) { Length = 4 },
+            //new Cruise(arbiter),
+            //new Avoid(arbiter),
             new Escape(arbiter)
             //new Remote(arbiter)
         };
         arbiter.SetBehaviorPrioritiesInOrder(behaviors);
     }
+
+    float previousTime;
 
     // Update is called once per frame
     private void FixedUpdate()
@@ -48,7 +51,7 @@ public class RobotController : MonoBehaviour, IRobotController
     {
         vLeft = robotCommand.LeftWheelSpeed;
         vRight = robotCommand.RightWheelSpeed;
-        robotBody.velocity = transform.right * (robotCommand.LeftWheelSpeed + robotCommand.RightWheelSpeed) / 2f;
+        robotBody.velocity = transform.right * (robotCommand.LeftWheelSpeed + robotCommand.RightWheelSpeed) / 2;
         robotBody.angularVelocity = (robotCommand.RightWheelSpeed - robotCommand.LeftWheelSpeed) * Mathf.Rad2Deg;
     }
 
@@ -77,7 +80,7 @@ public class RobotController : MonoBehaviour, IRobotController
             RightProximitySensor = rightProximitySensor.IsTriggered,
             LeftWheelSpeed = vLeft,
             RightWheelSpeed = vRight,
-            Time = Time.time
+            Time = Time.fixedTime
         };
     }
 
