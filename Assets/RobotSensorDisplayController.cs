@@ -25,10 +25,10 @@ $@"Left light: {sensors.LeftLightSensor:f2}
 Right light: {sensors.RightLightSensor:f2}
 Left proximity: {sensors.LeftProximitySensor}
 Right proximity {sensors.RightProximitySensor}
+Bumper force: {sensors.BumperForce:f2}
 Bumping: {sensors.IsBumping}
 Pushing: {sensors.IsPushing}
 Left wheel speed: {sensors.LeftWheelSpeed:f2}
-Right wheel speed: {sensors.RightWheelSpeed:f2}
-Bumper force: {sensors.BumperForce:f2}";
+Right wheel speed: {sensors.RightWheelSpeed:f2}";
     }
 }
