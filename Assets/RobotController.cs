@@ -30,7 +30,7 @@ public class RobotController : MonoBehaviour, IRobotController
             //new Home(arbiter),
             //new London(arbiter) { Length = 4 },
             new Cruise(arbiter),
-            new WallFollow(arbiter),
+            new DarkPush(arbiter) { MaxLightLevel = 0.1f },
             //new Avoid(arbiter),
             new Escape(arbiter)
             //new Remote(arbiter)
