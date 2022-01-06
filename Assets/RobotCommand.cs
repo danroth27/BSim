@@ -30,6 +30,8 @@ namespace BSim
 
         public static RobotCommand Straight() => Straight(RobotDefaults.Speed);
 
+        public static RobotCommand Stop => Straight(0);
+
         public const RobotCommand NoCommand = null;
     }
 }
