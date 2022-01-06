@@ -26,10 +26,11 @@ public class RobotController : MonoBehaviour, IRobotController
         var arbiter = new FixedPriorityArbiter(this);
         behaviors = new IBehavior[]
         {
-            new Gizmo(arbiter),
+            //new Gizmo(arbiter),
             //new Home(arbiter),
             //new London(arbiter) { Length = 4 },
-            //new Cruise(arbiter),
+            new Cruise(arbiter),
+            new WallFollow(arbiter),
             //new Avoid(arbiter),
             new Escape(arbiter)
             //new Remote(arbiter)
