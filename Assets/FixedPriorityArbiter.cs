@@ -31,19 +31,16 @@ namespace BSim
         public void ExecuteRobotCommand(RobotCommand command, IBehavior behavior)
         {
             var priority = behaviorPriorities[behavior];
-            if (priority >= executingPriority)
+            if (priority >= executingPriority && command != null)
             {
-                if (command != null)
-                {
-                    executingPriority = priority;
-                    executingBehavior = behavior; 
-                    robotController.ExecuteRobotCommand(command);
-                }
-                else
-                {
-                    executingPriority = -1;
-                    executingBehavior = null;
-                }
+                executingPriority = priority;
+                executingBehavior = behavior;
+                robotController.ExecuteRobotCommand(command);
+            }
+            else if (command == null && behavior == executingBehavior)
+            {
+                executingPriority = -1;
+                executingBehavior = null;
             }
         }
     }
