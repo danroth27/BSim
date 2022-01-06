@@ -27,11 +27,12 @@ public class RobotController : MonoBehaviour, IRobotController
         behaviors = new IBehavior[]
         {
             //new Gizmo(arbiter),
-            //new Home(arbiter),
             //new London(arbiter) { Length = 4 },
             new Cruise(arbiter),
-            new DarkPush(arbiter) { MaxLightLevel = 0.1f },
+            //new Home(arbiter),
             //new Avoid(arbiter),
+            new AntiMoth(arbiter),
+            //new DarkPush(arbiter),
             new Escape(arbiter)
             //new Remote(arbiter)
         };

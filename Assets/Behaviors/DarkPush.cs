@@ -24,14 +24,14 @@ namespace BSim.Behaviors
         public float SpinTime { get; set; } = 0.5f;
         public float ForwardTime { get; set; } = 0.1f;
         public float Speed { get; set; } = RobotDefaults.Speed;
-        public float MaxLightLevel { get; set; } = 0;
+        public float LightLevel { get; set; } = 0;
 
         public void Update(RobotSensors sensors)
         {
             if (state == State.Start)
             {
                 var avgLightLevel = (sensors.LeftLightSensor + sensors.RightLightSensor) / 2;
-                if (sensors.IsPushing && avgLightLevel <= MaxLightLevel)
+                if (sensors.IsPushing && avgLightLevel <= LightLevel)
                 {
                     startTime = sensors.Time;
                     state = State.Backup;

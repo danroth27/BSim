@@ -13,7 +13,7 @@ namespace BSim.Behaviors
         private State state = State.Start;
         private float startTime;
         private bool spinLeft;
-        private Random random = new Random();
+        private readonly Random random = new Random();
 
         public Escape(IArbiter arbiter)
         {
