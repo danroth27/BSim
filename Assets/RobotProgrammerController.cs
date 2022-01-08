@@ -11,6 +11,7 @@ public class RobotProgrammerController : MonoBehaviour
 {
     public Button addButton, removeButton;
     public ListViewController behaviorsListViewController, taskListViewController;
+    public PropertiesGridController propertiesGridController;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,12 @@ public class RobotProgrammerController : MonoBehaviour
     public void TaskListViewSelectionChanged(GameObject unselected, GameObject selected)
     {
         removeButton.interactable = selected != null;
+
+        if (selected != null)
+        {
+            var behaviorProperties = Behaviors.GetBehaviorProperties((IBehavior)taskListViewController.SelectedValue);
+            propertiesGridController.AddPropertyEditors(behaviorProperties);
+        }
     }
 
     public void AddSelectedBehaviorToTask()

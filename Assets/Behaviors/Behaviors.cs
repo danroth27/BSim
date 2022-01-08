@@ -14,17 +14,17 @@ namespace BSim.Behaviors
                 .Where(t => t.IsClass && typeof(IBehavior).IsAssignableFrom(t));
 
 
-        public static IEnumerable<PropertyInfo> GetBehaviorProperties(Type behaviorType)
+        public static IEnumerable<PropertyInfo> GetBehaviorProperties(IBehavior behavior)
         {
-            if (!behaviorType.IsAssignableFrom(typeof(IBehavior)))
+            var behaviorType = behavior.GetType();
+            if (!typeof(IBehavior).IsAssignableFrom(behaviorType))
             {
                 throw new InvalidOperationException("Type is not a behavior");
             }
 
-            return behaviorType.GetProperties(
-                BindingFlags.Public | 
-                BindingFlags.GetProperty | 
-                BindingFlags.SetProperty);
+            return behaviorType
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite);
         }
 
         public static string ToFriendlyName(this string str)
