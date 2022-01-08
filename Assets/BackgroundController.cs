@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BackgroundController : MonoBehaviour
+public class BackgroundController : MonoBehaviour, IPointerClickHandler
 {
     public GameObject puckPrefab;
 
@@ -18,9 +19,9 @@ public class BackgroundController : MonoBehaviour
         
     }
 
-    private void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
         mousePosition.z = 0;
         Instantiate(puckPrefab, mousePosition, Quaternion.identity);
     }

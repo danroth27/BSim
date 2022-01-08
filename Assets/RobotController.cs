@@ -5,15 +5,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class RobotController : MonoBehaviour, IRobotController
+public class RobotController : MonoBehaviour, IRobotController, IProgrammableRobot, IPointerClickHandler
 {
     private Rigidbody2D robotBody;
     private CircleCollider2D robotCollider2D;
     private ProximitySensorController leftProximitySensor, rightProximitySensor;
     private float vLeft, vRight;
-    private IEnumerable<IBehavior> behaviors;
+    private GameObject robotProgrammer;
+    public GameObject robotProgrammerPrefab;
+    public GameObject canvas;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -23,33 +27,41 @@ public class RobotController : MonoBehaviour, IRobotController
         var proximitySensors = GetComponentsInChildren<ProximitySensorController>();
         leftProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Left"));
         rightProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Right"));
-        var arbiter = new FixedPriorityArbiter(this);
-        behaviors = new IBehavior[]
-        {
-            //new Gizmo(arbiter),
-            //new London(arbiter) { Length = 4 },
-            new Cruise(arbiter),
-            //new Home(arbiter),
-            //new Avoid(arbiter),
-            new AntiMoth(arbiter),
-            //new DarkPush(arbiter),
-            new Escape(arbiter)
-            //new Remote(arbiter)
-        };
-        arbiter.SetBehaviorPrioritiesInOrder(behaviors);
-    }
 
-    float previousTime;
+        Arbiter = new FixedPriorityArbiter(this);
+        Behaviors = new List<IBehavior>
+        {
+            //new Gizmo(Arbiter),
+            //new London(Arbiter) { Length = 4 },
+            new Cruise(Arbiter),
+            new Home(Arbiter),
+            //new Avoid(Arbiter),
+            //new AntiMoth(Arbiter),
+            //new DarkPush(Arbiter),
+            new Escape(Arbiter)
+            //new Remote(Arbiter)
+        };
+        Arbiter.SetBehaviorPrioritiesInOrder(Behaviors);
+
+        robotProgrammer = Instantiate(robotProgrammerPrefab, canvas.transform, worldPositionStays: false);
+        robotProgrammer.SetActive(false);
+
+        var robotProgrammerController = robotProgrammer.GetComponent<RobotProgrammerController>();
+        robotProgrammerController.ProgrammableRobot = this;
+    }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
         var sensors = GetRobotSensors();
-        foreach (var behavior in behaviors)
+        foreach (var behavior in Behaviors)
         {
             behavior.Update(sensors);
         }
     }
+
+    public IList<IBehavior> Behaviors { get; private set; }
+    public FixedPriorityArbiter Arbiter { get; private set; }
 
     public void ExecuteRobotCommand(RobotCommand robotCommand)
     {
@@ -113,4 +125,14 @@ public class RobotController : MonoBehaviour, IRobotController
         }
         return lightSensorValue;
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount == 2)
+        {
+            robotProgrammer.SetActive(true);
+        }
+    }
+
+    
 }

@@ -2,35 +2,32 @@
 
 namespace BSim
 {
-    internal class FixedPriorityArbiter : IArbiter
+    public class FixedPriorityArbiter : IArbiter
     {
         private readonly IRobotController robotController;
-        private readonly IDictionary<IBehavior, int> behaviorPriorities = new Dictionary<IBehavior, int>();
         private IBehavior executingBehavior;
         private int executingPriority = -1;
 
         public FixedPriorityArbiter(IRobotController robotController)
         {
             this.robotController = robotController;
+            BehaviorPriorities = new Dictionary<IBehavior, int>();
         }
 
-        public void SetBehaviorPriority(IBehavior behavior, int priority)
-        {
-            behaviorPriorities[behavior] = priority;
-        }
+        public IDictionary<IBehavior, int> BehaviorPriorities { get; }
 
         public void SetBehaviorPrioritiesInOrder(IEnumerable<IBehavior> behaviors)
         {
             int i = 0;
             foreach (var behavior in behaviors)
             {
-                SetBehaviorPriority(behavior, i++);
+                BehaviorPriorities[behavior] = i++;
             }
         }
 
         public void ExecuteRobotCommand(RobotCommand command, IBehavior behavior)
         {
-            var priority = behaviorPriorities[behavior];
+            BehaviorPriorities.TryGetValue(behavior, out var priority);
             if (priority >= executingPriority && command != null)
             {
                 executingPriority = priority;
