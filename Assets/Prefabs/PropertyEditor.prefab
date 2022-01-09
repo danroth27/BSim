@@ -289,7 +289,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3919935831080239994}
+        m_TargetAssemblyTypeName: PropertyEditorController, Assembly-CSharp
+        m_MethodName: SetPropertyValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: test
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -313,6 +325,7 @@ GameObject:
   - component: {fileID: 4086919602595005522}
   - component: {fileID: 5988201521848390114}
   - component: {fileID: 4750668168651425640}
+  - component: {fileID: 3919935831080239994}
   m_Layer: 5
   m_Name: PropertyEditor
   m_TagString: Untagged
@@ -403,6 +416,20 @@ MonoBehaviour:
   m_Spacing: {x: 2, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &3919935831080239994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7244519987365519231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed06deaec15c0fc46bc2b43efd433e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propertyLabel: {fileID: 4231431586375445070}
+  propertyInputField: {fileID: 6224063399803649452}
 --- !u!1 &8470908058436270981
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,18 +20,19 @@ public class PropertiesGridController : MonoBehaviour
         
     }
 
-    public void AddPropertyEditor(PropertyInfo propertyInfo)
+    public void AddPropertyEditor(object editableValue, PropertyInfo propertyInfo)
     {
         var propertyEditor = Instantiate(propertyEditorPrefab, propertiesGridContent.transform, worldPositionStays: false);
-        //propertyEditor.GetComponent<Property>
+        var propertyEditorController = propertyEditor.GetComponent<PropertyEditorController>();
+        propertyEditorController.SetEditableProperty(editableValue, propertyInfo);
     }
 
-    public void AddPropertyEditors(IEnumerable<PropertyInfo> properties)
+    public void AddPropertyEditors(object editableValue, IEnumerable<PropertyInfo> properties)
     {
         RemoveAllPropertyEditors();
         foreach (var propertyInfo in properties)
         {
-            AddPropertyEditor(propertyInfo);
+            AddPropertyEditor(editableValue, propertyInfo);
         }
     }
 

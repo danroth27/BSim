@@ -46,15 +46,16 @@ public class RobotProgrammerController : MonoBehaviour
 
         if (selected != null)
         {
-            var behaviorProperties = Behaviors.GetBehaviorProperties((IBehavior)taskListViewController.SelectedValue);
-            propertiesGridController.AddPropertyEditors(behaviorProperties);
+            var behavior = (IBehavior)taskListViewController.SelectedValue;
+            var behaviorProperties = Behaviors.GetBehaviorProperties(behavior);
+            propertiesGridController.AddPropertyEditors(behavior, behaviorProperties);
         }
     }
 
     public void AddSelectedBehaviorToTask()
     {
-        var behaviorType = (Type) behaviorsListViewController.SelectedValue;
-        var behavior = (IBehavior) Activator.CreateInstance(behaviorType, ProgrammableRobot.Arbiter);
+        var behaviorType = (Type)behaviorsListViewController.SelectedValue;
+        var behavior = (IBehavior)Activator.CreateInstance(behaviorType, ProgrammableRobot.Arbiter);
         taskListViewController.AddListViewItem(behavior, behaviorType.Name.ToFriendlyName());
         ProgrammableRobot.Behaviors.Insert(0, behavior);
         ProgrammableRobot.Arbiter.SetBehaviorPrioritiesInOrder(ProgrammableRobot.Behaviors);
