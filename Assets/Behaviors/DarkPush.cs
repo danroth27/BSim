@@ -1,25 +1,23 @@
 ﻿using BSim;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BSim.Behaviors
 {
-    internal class DarkPush : IBehavior
+    public class DarkPush : IBehavior
     {
-        private readonly IArbiter arbiter;
         private State state = State.Start;
         private float startTime;
         private bool spinLeft;
         private Random random = new Random();
 
-        public DarkPush(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float BackupTime { get; set; } = 0.1f;
         public float SpinTime { get; set; } = 0.5f;
         public float ForwardTime { get; set; } = 0.1f;
@@ -40,7 +38,7 @@ namespace BSim.Behaviors
             else if (state == State.Backup)
             {
                 var robotCommand = RobotCommand.Straight(-RobotDefaults.Speed);
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + BackupTime)
                 {
                     startTime = sensors.Time;
@@ -51,7 +49,7 @@ namespace BSim.Behaviors
             else if (state == State.Spin)
             {
                 var robotCommand = RobotCommand.Spin(spinLeft ? RobotDefaults.Speed : -RobotDefaults.Speed);
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + SpinTime)
                 {
                     startTime = sensors.Time;
@@ -61,11 +59,11 @@ namespace BSim.Behaviors
             else if (state == State.Forward)
             {
                 var robotCommand = RobotCommand.Straight();
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + ForwardTime)
                 {
                     state = State.Start;
-                    arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
+                    Arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
                 }
             }
         }

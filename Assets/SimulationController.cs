@@ -22,7 +22,6 @@ public class SimulationController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log($"{Time.fixedTime}: FixedUpdate");
         if (isStepping)
         {
             Time.timeScale = 0;
@@ -49,7 +48,6 @@ public class SimulationController : MonoBehaviour
 
     public void StepSimulation()
     {
-        Debug.Log($"{Time.fixedTime}: StepSimulation");
         isStepping = true;
         Time.timeScale = 1;
     }

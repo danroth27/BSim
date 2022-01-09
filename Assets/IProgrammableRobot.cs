@@ -8,7 +8,7 @@ namespace BSim
 {
     public interface IProgrammableRobot
     {
-        IList<IBehavior> Behaviors { get; }
+        List<IBehavior> Behaviors { get; }
         FixedPriorityArbiter Arbiter { get; }
     }
 }

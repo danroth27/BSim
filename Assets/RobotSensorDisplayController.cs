@@ -11,16 +11,21 @@ public class RobotSensorDisplayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        robot = FindObjectOfType<RobotController>();
         sensorDisplay = GetComponent<Text>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        var sensors = robot.GetRobotSensors();
+        if (robot == null)
+        {
+            sensorDisplay.text = "No robot to display";
+        }
+        else
+        {
+            var sensors = robot.GetRobotSensors();
 
-        sensorDisplay.text =
+            sensorDisplay.text =
 $@"Left light: {sensors.LeftLightSensor:f2}
 Right light: {sensors.RightLightSensor:f2}
 Left proximity: {sensors.LeftProximitySensor}
@@ -30,5 +35,11 @@ Bumping: {sensors.IsBumping}
 Pushing: {sensors.IsPushing}
 Left wheel speed: {sensors.LeftWheelSpeed:f2}
 Right wheel speed: {sensors.RightWheelSpeed:f2}";
+        }
+    }
+
+    public void SetRobotToDisplay(RobotController robot)
+    {
+        this.robot = robot;
     }
 }

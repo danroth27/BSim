@@ -21,7 +21,7 @@ public class RobotProgrammerController : MonoBehaviour
             behaviorsListViewController.AddListViewItem(behaviorType, behaviorType.Name.ToFriendlyName());
         }
 
-        foreach (var behavior in ProgrammableRobot.Behaviors.Reverse())
+        foreach (var behavior in ProgrammableRobot.Behaviors.Reverse<IBehavior>())
         {
             taskListViewController.AddListViewItem(behavior, behavior.GetType().Name.ToFriendlyName());
         }

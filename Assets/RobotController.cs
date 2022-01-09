@@ -12,37 +12,20 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 {
     private Rigidbody2D robotBody;
     private CircleCollider2D robotCollider2D;
-    private ProximitySensorController leftProximitySensor, rightProximitySensor;
+    public ProximitySensorController leftProximitySensor, rightProximitySensor;
     private float vLeft, vRight;
-    private GameObject robotProgrammer;
     public GameObject robotProgrammerPrefab;
-    public GameObject canvas;
-
+    private GameObject robotProgrammer;
 
     // Start is called before the first frame update
     private void Awake()
     {
         robotBody = GetComponent<Rigidbody2D>();
         robotCollider2D = GetComponent<CircleCollider2D>();
-        var proximitySensors = GetComponentsInChildren<ProximitySensorController>();
-        leftProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Left"));
-        rightProximitySensor = proximitySensors.First(proximitySensor => proximitySensor.name.Contains("Right"));
 
-        Arbiter = new FixedPriorityArbiter(this);
-        Behaviors = new List<IBehavior>
-        {
-            //new Gizmo(Arbiter),
-            //new London(Arbiter) { Length = 4 },
-            new Cruise(Arbiter),
-            new Home(Arbiter),
-            //new Avoid(Arbiter),
-            //new AntiMoth(Arbiter),
-            //new DarkPush(Arbiter),
-            new Escape(Arbiter)
-            //new Remote(Arbiter)
-        };
-        Arbiter.SetBehaviorPrioritiesInOrder(Behaviors);
+        Arbiter = new FixedPriorityArbiter(this, Behaviors);
 
+        var canvas = GameObject.FindObjectOfType<Canvas>();
         robotProgrammer = Instantiate(robotProgrammerPrefab, canvas.transform, worldPositionStays: false);
         robotProgrammer.SetActive(false);
 
@@ -60,8 +43,15 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
         }
     }
 
-    public IList<IBehavior> Behaviors { get; private set; }
+    public List<IBehavior> Behaviors { get; } = new List<IBehavior>();
     public FixedPriorityArbiter Arbiter { get; private set; }
+
+    public void UpdateBehaviors(IEnumerable<IBehavior> newBehaviors)
+    {
+        Behaviors.Clear();
+        Behaviors.AddRange(newBehaviors);
+        Arbiter.SetBehaviorPrioritiesInOrder(Behaviors);
+    }
 
     public void ExecuteRobotCommand(RobotCommand robotCommand)
     {
@@ -73,6 +63,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     public RobotSensors GetRobotSensors()
     {
+
         // Bumper
         var contactPoints = new List<ContactPoint2D>();
         robotCollider2D.GetContacts(contactPoints);

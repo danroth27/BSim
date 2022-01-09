@@ -1,4 +1,5 @@
 ﻿using BSim;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +8,15 @@ using System.Threading.Tasks;
 
 namespace BSim.Behaviors
 {
-    internal class Escape : IBehavior
+    public class Escape : IBehavior
     {
-        private readonly IArbiter arbiter;
         private State state = State.Start;
         private float startTime;
         private bool spinLeft;
         private readonly Random random = new Random();
 
-        public Escape(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float BackupTime { get; set; } = 0.1f;
         public float SpinTime { get; set; } = 0.5f;
         public float ForwardTime { get; set; } = 0.1f;
@@ -38,7 +35,7 @@ namespace BSim.Behaviors
             else if (state == State.Backup)
             {
                 var robotCommand = RobotCommand.Straight(-Speed);
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + BackupTime)
                 {
                     startTime = sensors.Time;
@@ -49,7 +46,7 @@ namespace BSim.Behaviors
             else if (state == State.Spin)
             {
                 var robotCommand = RobotCommand.Spin(spinLeft ? Speed : -Speed);
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + SpinTime)
                 {
                     startTime = sensors.Time;
@@ -59,11 +56,11 @@ namespace BSim.Behaviors
             else if (state == State.Forward)
             {
                 var robotCommand = RobotCommand.Straight();
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + ForwardTime)
                 {
                     state = State.Start;
-                    arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
+                    Arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
                 }
             }
         }

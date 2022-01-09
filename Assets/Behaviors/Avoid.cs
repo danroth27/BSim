@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace BSim.Behaviors
 {
-    internal class Avoid : IBehavior
+    public class Avoid : IBehavior
     {
-        private readonly IArbiter arbiter;
         private State state = State.Start;
 
-        public Avoid(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float Gain { get; set; } = 1;
         public float Speed { get; set; } = RobotDefaults.Speed;
 
@@ -43,7 +40,7 @@ namespace BSim.Behaviors
                 {
                     state = State.Start;
                 }
-                arbiter.ExecuteRobotCommand(robotCommand, this);
+                Arbiter.ExecuteRobotCommand(robotCommand, this);
             }
         }
 

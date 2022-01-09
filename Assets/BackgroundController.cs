@@ -5,24 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BackgroundController : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject puckPrefab;
+    public WorldController world;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        var mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        mousePosition.z = 0;
-        Instantiate(puckPrefab, mousePosition, Quaternion.identity);
-    }
+    public void OnPointerClick(PointerEventData eventData) => world.OnPointerClick(eventData);
 }

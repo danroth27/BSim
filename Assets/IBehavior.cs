@@ -7,15 +7,7 @@ namespace BSim
     public interface IBehavior
     {
         void Update(RobotSensors sensors);
-    }
 
-    public class Task
-    {
-
-    }
-
-    public class Simulation
-    {
-
+        IArbiter Arbiter { get; set; }
     }
 }

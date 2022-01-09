@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,18 +8,14 @@ using System.Threading.Tasks;
 
 namespace BSim.Behaviors
 {
-    internal class London : IBehavior
+    public class London : IBehavior
     {
-        private readonly IArbiter arbiter;
         private State state = State.Forward;
-        private float startTime = 0;
+        private float startTime = -1;
         private float epsilon = 0.001f;
 
-        public London(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float Length { get; set; } = 8;
         public float FixedTimeDelta { get; set; } = 0.02f;
         public float Speed { get; set; } = RobotDefaults.Speed;
@@ -27,6 +24,8 @@ namespace BSim.Behaviors
 
         public void Update(RobotSensors sensors)
         {
+            if (startTime == -1) startTime = sensors.Time;
+            
             var robotCommand = RobotCommand.NoCommand;
             if (state == State.Forward)
             {
@@ -47,7 +46,7 @@ namespace BSim.Behaviors
                     startTime = sensors.Time;
                 }
             }
-            arbiter.ExecuteRobotCommand(robotCommand, this);
+            Arbiter.ExecuteRobotCommand(robotCommand, this);
         }
 
         enum State

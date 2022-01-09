@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,12 @@ namespace BSim.Behaviors
 {
     internal class AntiMoth : IBehavior
     {
-        private readonly IArbiter arbiter;
         private readonly Random random = new Random();
         private State state = State.Start;
         private float startTime, spinTime, spinSpeed;
 
-        public AntiMoth(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float LightLevel { get; set; } = 1f;
 
@@ -42,7 +39,7 @@ namespace BSim.Behaviors
                     state = State.Start;
                 }
             }
-            arbiter.ExecuteRobotCommand(robotCommand, this);
+            Arbiter.ExecuteRobotCommand(robotCommand, this);
         }
 
         private enum State

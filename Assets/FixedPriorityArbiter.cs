@@ -8,20 +8,22 @@ namespace BSim
         private IBehavior executingBehavior;
         private int executingPriority = -1;
 
-        public FixedPriorityArbiter(IRobotController robotController)
+        public FixedPriorityArbiter(IRobotController robotController, IEnumerable<IBehavior> behaviors)
         {
             this.robotController = robotController;
-            BehaviorPriorities = new Dictionary<IBehavior, int>();
+            SetBehaviorPrioritiesInOrder(behaviors);
         }
 
-        public IDictionary<IBehavior, int> BehaviorPriorities { get; }
+        public IDictionary<IBehavior, int> BehaviorPriorities = new Dictionary<IBehavior, int>();
 
         public void SetBehaviorPrioritiesInOrder(IEnumerable<IBehavior> behaviors)
         {
+            BehaviorPriorities.Clear();
             int i = 0;
             foreach (var behavior in behaviors)
             {
                 BehaviorPriorities[behavior] = i++;
+                behavior.Arbiter = this;
             }
         }
 

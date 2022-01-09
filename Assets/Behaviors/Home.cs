@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace BSim.Behaviors
 {
-    internal class Home : IBehavior
+    public class Home : IBehavior
     {
-        private readonly IArbiter arbiter;
-
-        public Home(IArbiter arbiter)
-        {
-            this.arbiter = arbiter;
-        }
-
+        [JsonIgnore]
+        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float Gain { get; set; } = 10;
         public float LightMin { get; set; } = 0.1f;
@@ -31,7 +27,7 @@ namespace BSim.Behaviors
                     RightWheelSpeed = Math.Max(Math.Min(Speed - Gain * lightDiff, 2), -2)
                 };
             }
-            arbiter.ExecuteRobotCommand(robotCommand, this);
+            Arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }
