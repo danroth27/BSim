@@ -12,11 +12,11 @@ namespace BSim.Behaviors
         private readonly Random random = new Random();
         private State state = State.Start;
         private float startTime, spinTime, spinSpeed;
-
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float LightLevel { get; set; } = 1f;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
@@ -39,7 +39,7 @@ namespace BSim.Behaviors
                     state = State.Start;
                 }
             }
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
 
         private enum State

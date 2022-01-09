@@ -9,12 +9,13 @@ namespace BSim.Behaviors
 {
     public class Gizmo : IBehavior
     {
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float Gain { get; set; } = 1;
         public float TargetLightLevel { get; set; } = 1;
         public float ErrorTolerance { get; set; } = 0.001f;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
@@ -25,7 +26,7 @@ namespace BSim.Behaviors
             {
                 robotCommand = RobotCommand.Straight(Speed * Gain * lightDiff);
             }
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }

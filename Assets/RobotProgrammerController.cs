@@ -55,7 +55,7 @@ public class RobotProgrammerController : MonoBehaviour
     public void AddSelectedBehaviorToTask()
     {
         var behaviorType = (Type)behaviorsListViewController.SelectedValue;
-        var behavior = (IBehavior)Activator.CreateInstance(behaviorType, ProgrammableRobot.Arbiter);
+        var behavior = (IBehavior)Activator.CreateInstance(behaviorType);
         taskListViewController.AddListViewItem(behavior, behaviorType.Name.ToFriendlyName());
         ProgrammableRobot.Behaviors.Insert(0, behavior);
         ProgrammableRobot.Arbiter.SetBehaviorPrioritiesInOrder(ProgrammableRobot.Behaviors);

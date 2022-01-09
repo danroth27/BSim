@@ -10,9 +10,10 @@ namespace BSim.Behaviors
 {
     public class Remote : IBehavior
     {
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
@@ -25,7 +26,7 @@ namespace BSim.Behaviors
                 RightWheelSpeed = Speed * Math.Max(Math.Min(v - h, 1), -1)
             };
 
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }

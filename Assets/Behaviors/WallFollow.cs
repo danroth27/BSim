@@ -11,9 +11,9 @@ namespace BSim.Behaviors
     {
         private State state = State.Start;
         private float wallLostTime;
+        private IArbiter arbiter;
 
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
         public float Gain { get; set; } = 1;
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float WallLostTimeout { get; set; } = 1;
@@ -34,7 +34,7 @@ namespace BSim.Behaviors
             else if (state == State.Left)
             {
                 var robotCommand = new RobotCommand(Speed, SpeedWithGain());
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
                 
                 if (!sensors.LeftProximitySensor)
                 {
@@ -45,7 +45,7 @@ namespace BSim.Behaviors
             else if (state == State.LeftLost)
             {
                 var robotCommand = new RobotCommand(SpeedWithGain(), Speed);
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
 
                 if (sensors.LeftProximitySensor)
                 {
@@ -59,7 +59,7 @@ namespace BSim.Behaviors
             else if (state == State.Right)
             {
                 var robotCommand = new RobotCommand(SpeedWithGain(), Speed);
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
 
                 if (!sensors.RightProximitySensor)
                 {
@@ -70,7 +70,7 @@ namespace BSim.Behaviors
             else if (state == State.RightLost)
             {
                 var robotCommand = new RobotCommand(Speed, SpeedWithGain());
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
 
                 if (sensors.RightProximitySensor)
                 {
@@ -84,7 +84,7 @@ namespace BSim.Behaviors
             else if (state == State.Stop)
             {
                 var robotCommand = RobotCommand.NoCommand;
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
                 state = State.Start;
             }
         }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SimulationController : MonoBehaviour
 {
     public Button startButton, stopButton, stepButton, resetButton;
+    public WorldController world;
     private bool isStepping;
 
     // Start is called before the first frame update
@@ -35,7 +36,6 @@ public class SimulationController : MonoBehaviour
         startButton.interactable = false;
         stopButton.interactable = true;
         stepButton.interactable = false;
-        resetButton.interactable = false;
     }
 
     public void StopSimulation()
@@ -54,6 +54,6 @@ public class SimulationController : MonoBehaviour
 
     public void ResetSimulation()
     {
-
+        world.ResetSimulation();
     }
 }

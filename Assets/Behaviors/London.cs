@@ -13,9 +13,9 @@ namespace BSim.Behaviors
         private State state = State.Forward;
         private float startTime = -1;
         private float epsilon = 0.001f;
+        private IArbiter arbiter;
 
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
         public float Length { get; set; } = 8;
         public float FixedTimeDelta { get; set; } = 0.02f;
         public float Speed { get; set; } = RobotDefaults.Speed;
@@ -46,7 +46,7 @@ namespace BSim.Behaviors
                     startTime = sensors.Time;
                 }
             }
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
 
         enum State

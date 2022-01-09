@@ -25,7 +25,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
         Arbiter = new FixedPriorityArbiter(this, Behaviors);
 
-        var canvas = GameObject.FindObjectOfType<Canvas>();
+        var canvas = GameObject.FindGameObjectWithTag("Canvas");
         robotProgrammer = Instantiate(robotProgrammerPrefab, canvas.transform, worldPositionStays: false);
         robotProgrammer.SetActive(false);
 
@@ -34,6 +34,11 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+
+    }
+
     private void FixedUpdate()
     {
         var sensors = GetRobotSensors();
@@ -119,11 +124,14 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.clickCount == 2)
+        if (eventData.clickCount == 2 && robotProgrammer != null)
         {
             robotProgrammer.SetActive(true);
         }
     }
 
-    
+    public void OnDestroy()
+    {
+        GameObject.Destroy(robotProgrammer);
+    }
 }

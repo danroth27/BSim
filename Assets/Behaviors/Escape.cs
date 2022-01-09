@@ -14,9 +14,9 @@ namespace BSim.Behaviors
         private float startTime;
         private bool spinLeft;
         private readonly Random random = new Random();
+        private IArbiter arbiter;
 
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
         public float BackupTime { get; set; } = 0.1f;
         public float SpinTime { get; set; } = 0.5f;
         public float ForwardTime { get; set; } = 0.1f;
@@ -35,7 +35,7 @@ namespace BSim.Behaviors
             else if (state == State.Backup)
             {
                 var robotCommand = RobotCommand.Straight(-Speed);
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + BackupTime)
                 {
                     startTime = sensors.Time;
@@ -46,7 +46,7 @@ namespace BSim.Behaviors
             else if (state == State.Spin)
             {
                 var robotCommand = RobotCommand.Spin(spinLeft ? Speed : -Speed);
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + SpinTime)
                 {
                     startTime = sensors.Time;
@@ -56,11 +56,11 @@ namespace BSim.Behaviors
             else if (state == State.Forward)
             {
                 var robotCommand = RobotCommand.Straight();
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + ForwardTime)
                 {
                     state = State.Start;
-                    Arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
+                    arbiter.ExecuteRobotCommand(RobotCommand.NoCommand, this);
                 }
             }
         }

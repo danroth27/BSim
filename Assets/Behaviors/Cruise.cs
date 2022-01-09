@@ -9,15 +9,16 @@ namespace BSim.Behaviors
 {
     public class Cruise : IBehavior
     {
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float LeftWheelSpeed { get; set; } = RobotDefaults.Speed;
         public float RightWheelSpeed { get; set; } = RobotDefaults.Speed;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
             var robotCommand = new RobotCommand(LeftWheelSpeed, RightWheelSpeed);
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }

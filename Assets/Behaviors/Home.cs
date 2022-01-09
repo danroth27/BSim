@@ -9,11 +9,12 @@ namespace BSim.Behaviors
 {
     public class Home : IBehavior
     {
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float Gain { get; set; } = 10;
         public float LightMin { get; set; } = 0.1f;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
@@ -27,7 +28,7 @@ namespace BSim.Behaviors
                     RightWheelSpeed = Math.Max(Math.Min(Speed - Gain * lightDiff, 2), -2)
                 };
             }
-            Arbiter.ExecuteRobotCommand(robotCommand, this);
+            arbiter.ExecuteRobotCommand(robotCommand, this);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BSim
             foreach (var behavior in behaviors)
             {
                 BehaviorPriorities[behavior] = i++;
-                behavior.Arbiter = this;
+                behavior.SetArbiter(this);
             }
         }
 

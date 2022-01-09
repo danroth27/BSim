@@ -2,20 +2,26 @@ using BSim.Simulations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class WorldController : MonoBehaviour, IPointerClickHandler
 {
     public GameObject robotPrefab, lightSourcePrefab, puckPrefab;
     public GameObject simObjects;
     public RobotSensorDisplayController robotDisplay;
+    public Dropdown simulationSelectorDropdown;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        var simulationNames = new List<string>(Simulations.PrebuiltSimulations.Select(s => s.Name));
+        simulationSelectorDropdown.AddOptions(simulationNames);
+        LoadSimulation(Simulations.PrebuiltSimulations[0]);
     }
 
     // Update is called once per frame
@@ -24,16 +30,12 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
         
     }
 
-    public void ClearWorld()
+    public void OnValueChanged(int index)
     {
-        robotDisplay.SetRobotToDisplay(null);
-        foreach (Transform simObject in simObjects.transform)
-        {
-            GameObject.Destroy(simObject.gameObject);
-        }
+        LoadSimulation(Simulations.PrebuiltSimulations[index]);
     }
 
-    public void LoadSimulation(Simulation simulation)
+    void LoadSimulation(Simulation simulation)
     {
         ClearWorld();
 
@@ -50,6 +52,18 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
                 default:
                     throw new InvalidOperationException($"Unknown simulation object type: {simObject.GetType().Name}");
             }
+        }
+    }
+
+    public void ResetSimulation() =>
+        LoadSimulation(Simulations.PrebuiltSimulations[simulationSelectorDropdown.value]);
+
+    public void ClearWorld()
+    {
+        robotDisplay.SetRobotToDisplay(null);
+        foreach (Transform simObject in simObjects.transform)
+        {
+            GameObject.Destroy(simObject.gameObject);
         }
     }
 

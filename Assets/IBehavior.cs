@@ -8,6 +8,6 @@ namespace BSim
     {
         void Update(RobotSensors sensors);
 
-        IArbiter Arbiter { get; set; }
+        void SetArbiter(IArbiter arbiter);
     }
 }

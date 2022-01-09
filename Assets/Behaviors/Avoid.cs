@@ -10,11 +10,11 @@ namespace BSim.Behaviors
     public class Avoid : IBehavior
     {
         private State state = State.Start;
-
-        [JsonIgnore]
-        public IArbiter Arbiter { get; set; }
         public float Gain { get; set; } = 1;
         public float Speed { get; set; } = RobotDefaults.Speed;
+        private IArbiter arbiter;
+
+        public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
 
         public void Update(RobotSensors sensors)
         {
@@ -40,7 +40,7 @@ namespace BSim.Behaviors
                 {
                     state = State.Start;
                 }
-                Arbiter.ExecuteRobotCommand(robotCommand, this);
+                arbiter.ExecuteRobotCommand(robotCommand, this);
             }
         }
 
