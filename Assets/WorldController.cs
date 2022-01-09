@@ -47,7 +47,10 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
                     LoadRobot(robot);
                     break;
                 case LightSource lightSource:
-                    Instantiate(lightSourcePrefab, lightSource.Position, Quaternion.identity, simObjects.transform);
+                    LoadSimulationObject(lightSource, lightSourcePrefab);
+                    break;
+                case Puck puck:
+                    LoadSimulationObject(puck, puckPrefab);
                     break;
                 default:
                     throw new InvalidOperationException($"Unknown simulation object type: {simObject.GetType().Name}");
@@ -67,9 +70,12 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    public GameObject LoadSimulationObject(SimulationObject simObject, GameObject prefab) =>
+        Instantiate(prefab, simObject.Position, Quaternion.Euler(0, 0, simObject.Rotation), simObjects.transform);
+
     public void LoadRobot(Robot simRobot)
     {
-        var robot = Instantiate(robotPrefab, simRobot.Position, Quaternion.Euler(0, 0, simRobot.Rotation), simObjects.transform).GetComponent<RobotController>();
+        var robot = LoadSimulationObject(simRobot, robotPrefab).GetComponent<RobotController>();
         robotDisplay.SetRobotToDisplay(robot);
         robot.UpdateBehaviors(simRobot.Behaviors);
     }

@@ -124,7 +124,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.clickCount == 2 && robotProgrammer != null)
+        if (robotProgrammer != null)
         {
             robotProgrammer.SetActive(true);
         }

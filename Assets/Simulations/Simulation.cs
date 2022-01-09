@@ -14,18 +14,18 @@ namespace BSim.Simulations
     {
         public string Name { get; set; }
         public SimulationOptions Options { get; set; }
-        public IList<SimulationObject> Objects { get; set; } = new List<SimulationObject>();
+        public List<SimulationObject> Objects { get; set; } = new List<SimulationObject>();
     }
 
     public abstract class SimulationObject
     {
-        public Vector2 Position { get; set; }
+        public Vector2 Position { get; set; } = Vector2.zero;
         public float Rotation { get; set; }
     }
 
     public class Robot : SimulationObject
     {
-        public IList<IBehavior> Behaviors { get; set; } = new List<IBehavior>();
+        public List<IBehavior> Behaviors { get; set; } = new List<IBehavior>();
     }
 
     public class Puck : SimulationObject { }
@@ -48,7 +48,7 @@ namespace BSim.Simulations
     {
         public static IList<Simulation> PrebuiltSimulations => new Simulation[]
         {
-            Empty(), Gizmo(), London()
+            Empty(), Gizmo(), London(), BallPit()
         };
 
         public static Simulation Empty() => new Simulation { Name = "Empty" };
@@ -98,6 +98,34 @@ namespace BSim.Simulations
                 },
             };
         }
-    }
 
+        public static Simulation BallPit()
+        {
+            var ballPit = new Simulation
+            {
+                Name = "Ball Pit",
+                Objects =
+                {
+                    new Robot()
+                    {
+                        Position = new Vector2(-4, 0),
+                        Behaviors =
+                        {
+                            new Cruise(),
+                            new Escape()
+                        }
+                    }
+
+                }
+            };
+
+            for (int i = 0; i < 1000; i++)
+            {
+                //var randomPosition = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-180f, 180f)) * Vector2.right * UnityEngine.Random.Range(0, 4f);
+                var randomPosition = new Vector2(UnityEngine.Random.Range(-4.9f, 4.9f), UnityEngine.Random.Range(-4f, 5f));
+                ballPit.Objects.Add(new Puck { Position = randomPosition });
+            }
+            return ballPit;
+        }
+    }
 }
