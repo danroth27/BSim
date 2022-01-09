@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class ListViewSelectionChangedEvent : UnityEvent<GameObject, GameObject> { }
-
 public class ListViewController : MonoBehaviour
 {
     public GameObject listViewContent;
@@ -79,7 +76,11 @@ public class ListViewController : MonoBehaviour
         GameObject.Destroy(listViewItem);
     }
 
-    public void RemoveSelectedItem() => RemoveListViewItem(SelectedListViewItem);
+    public void RemoveSelectedItem()
+    {
+        RemoveListViewItem(SelectedListViewItem);
+        SelectedListViewItem = null;
+    }
 
     public void InsertListViewItem(GameObject listViewItem, int index)
     {
@@ -92,4 +93,7 @@ public class ListViewController : MonoBehaviour
 
         listViewItem.transform.SetSiblingIndex(index);
     }
+
+    [Serializable]
+    public class ListViewSelectionChangedEvent : UnityEvent<GameObject, GameObject> { }
 }
