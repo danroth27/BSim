@@ -37,7 +37,7 @@ namespace BSim.Behaviors
             }
             else if (state == State.Backup)
             {
-                var robotCommand = RobotCommand.Straight(-RobotDefaults.Speed);
+                var robotCommand = RobotCommand.Straight(-Speed);
                 arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + BackupTime)
                 {
@@ -48,7 +48,7 @@ namespace BSim.Behaviors
             }
             else if (state == State.Spin)
             {
-                var robotCommand = RobotCommand.Spin(spinLeft ? RobotDefaults.Speed : -RobotDefaults.Speed);
+                var robotCommand = RobotCommand.Spin(spinLeft ? Speed : -Speed);
                 arbiter.ExecuteRobotCommand(robotCommand, this);
                 if (sensors.Time > startTime + SpinTime)
                 {
