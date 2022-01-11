@@ -29,7 +29,7 @@ public class RobotSensorDisplayController : MonoBehaviour
 $@"Left light: {sensors.LeftLightSensor:f2}
 Right light: {sensors.RightLightSensor:f2}
 Left proximity: {sensors.LeftProximitySensor}
-Right proximity {sensors.RightProximitySensor}
+Right proximity: {sensors.RightProximitySensor}
 Bumper force: {sensors.BumperForce:f2}
 Bumping: {sensors.IsBumping}
 Pushing: {sensors.IsPushing}
