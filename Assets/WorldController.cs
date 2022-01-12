@@ -10,11 +10,12 @@ using UnityEngine.UI;
 
 public class WorldController : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject robotPrefab, lightSourcePrefab, puckPrefab;
+    public GameObject robotPrefab, lightSourcePrefab, puckPrefab, wallPrefab;
     public GameObject simObjects;
     public RobotSensorDisplayController robotDisplay;
     public Dropdown simulationSelectorDropdown;
-
+    public Toggle fantasyModeToggle;
+    public Slider latencySlider;
 
     // Start is called before the first frame update
     void Start()
@@ -52,10 +53,16 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
                 case Puck puck:
                     LoadSimulationObject(puck, puckPrefab);
                     break;
+                case Wall wall:
+                    LoadWall(wall);
+                    break;
                 default:
                     throw new InvalidOperationException($"Unknown simulation object type: {simObject.GetType().Name}");
             }
         }
+
+        fantasyModeToggle.isOn = simulation.Options.FantasyMode;
+        latencySlider.value = simulation.Options.Latency / Time.fixedDeltaTime;
     }
 
     public void ResetSimulation() =>
@@ -78,6 +85,14 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
         var robot = LoadSimulationObject(simRobot, robotPrefab).GetComponent<RobotController>();
         robotDisplay.SetRobotToDisplay(robot);
         robot.UpdateBehaviors(simRobot.Behaviors);
+    }
+
+    public void LoadWall(Wall simWall)
+    {
+        var wall = LoadSimulationObject(simWall, wallPrefab);
+        var localScale = wall.transform.localScale;
+        localScale.x = simWall.Length;
+        wall.transform.localScale = localScale;
     }
 
     public void OnPointerClick(PointerEventData eventData)

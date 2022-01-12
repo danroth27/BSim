@@ -1074,7 +1074,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 27916961}
   toggleTransition: 1
   graphic: {fileID: 640018108}
@@ -3370,7 +3370,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1459887447}
   m_FillRect: {fileID: 168359427}
   m_HandleRect: {fileID: 1459887446}
@@ -3395,7 +3395,7 @@ GameObject:
   - component: {fileID: 1316312411}
   m_Layer: 5
   m_Name: Options
-  m_TagString: Untagged
+  m_TagString: Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5382,9 +5382,12 @@ MonoBehaviour:
   robotPrefab: {fileID: 8069697260117540461, guid: 2b5de174f39a2e442bbf246d084ad8d2, type: 3}
   lightSourcePrefab: {fileID: 6987746339470566743, guid: 6ecc3bb79ffff25449ec0a3a79766980, type: 3}
   puckPrefab: {fileID: 4788565508883727399, guid: 15a840140520433428c1c823565feacd, type: 3}
+  wallPrefab: {fileID: 2502776258115051125, guid: e321c9233cb8b6d4396c478a988acc61, type: 3}
   simObjects: {fileID: 736471760}
   robotDisplay: {fileID: 1599829728}
   simulationSelectorDropdown: {fileID: 1855554982}
+  fantasyModeToggle: {fileID: 251645765}
+  latencySlider: {fileID: 1314695879}
 --- !u!4 &1847681645
 Transform:
   m_ObjectHideFlags: 0

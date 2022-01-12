@@ -1,5 +1,6 @@
 using BSim;
 using BSim.Behaviors;
+using BSim.Simulations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.UI;
 
 public class RobotController : MonoBehaviour, IRobotController, IProgrammableRobot, IPointerClickHandler
 {
@@ -16,6 +18,9 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     private float vLeft, vRight;
     public GameObject robotProgrammerPrefab;
     private GameObject robotProgrammer;
+    private Toggle fantasyModeToggle;
+    private Slider latencySlider;
+    private const float wheelSpeedNoise = 0.1f;
 
     // Start is called before the first frame update
     private void Awake()
@@ -31,6 +36,10 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
         var robotProgrammerController = robotProgrammer.GetComponent<RobotProgrammerController>();
         robotProgrammerController.ProgrammableRobot = this;
+
+        var simOptions = GameObject.FindGameObjectWithTag("Options");
+        fantasyModeToggle = simOptions.GetComponentInChildren<Toggle>();
+        latencySlider = simOptions.GetComponentInChildren<Slider>();
     }
 
     // Update is called once per frame
@@ -60,15 +69,17 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     public void ExecuteRobotCommand(RobotCommand robotCommand)
     {
-        vLeft = robotCommand.LeftWheelSpeed;
-        vRight = robotCommand.RightWheelSpeed;
-        robotBody.velocity = transform.right * (robotCommand.LeftWheelSpeed + robotCommand.RightWheelSpeed) / 2;
-        robotBody.angularVelocity = (robotCommand.RightWheelSpeed - robotCommand.LeftWheelSpeed) * Mathf.Rad2Deg;
+        vLeft = robotCommand.LeftWheelSpeed + GetWheelSpeedNoise();
+        vRight = robotCommand.RightWheelSpeed + GetWheelSpeedNoise();
+        robotBody.velocity = transform.right * (vLeft + vRight) / 2;
+        robotBody.angularVelocity = (vRight - vLeft) * Mathf.Rad2Deg;
     }
+
+    public float GetWheelSpeedNoise() =>
+        fantasyModeToggle.isOn ? 0 : UnityEngine.Random.Range(-wheelSpeedNoise, wheelSpeedNoise);
 
     public RobotSensors GetRobotSensors()
     {
-
         // Bumper
         var contactPoints = new List<ContactPoint2D>();
         robotCollider2D.GetContacts(contactPoints);
