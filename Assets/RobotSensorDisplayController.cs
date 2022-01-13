@@ -36,7 +36,8 @@ Bumper force: {sensors.BumperForce:f2}
 Bumping: {sensors.IsBumping}
 Pushing: {sensors.IsPushing}
 Left wheel speed: {sensors.LeftWheelSpeed:f2}
-Right wheel speed: {sensors.RightWheelSpeed:f2}";
+Right wheel speed: {sensors.RightWheelSpeed:f2}
+Behavior:";
             }
         }
     }

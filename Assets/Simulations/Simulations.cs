@@ -8,10 +8,45 @@ namespace BSim.Simulations
     {
         public static IList<Simulation> PrebuiltSimulations => new Simulation[]
         {
-            Empty(), Gizmo(), London(), BallPit()
+            Empty(), Collection(), Gizmo(), London(), BallPit()
         };
 
         public static Simulation Empty() => new Simulation { Name = "Empty" };
+
+        public static Simulation Collection()
+        {
+            var collection = new Simulation
+            {
+                Name = "Collection",
+                Objects =
+                {
+                    new Robot
+                    {
+                        Position = new Vector2(-3, 0),
+                        Behaviors =
+                        {
+                            new Cruise(),
+                            new Home(),
+                            new Avoid { Gain = -1 },
+                            new AntiMoth(),
+                            new DarkPush(),
+                            new Escape()
+                        }
+                    },
+                    new LightSource { Position = new Vector2(0, 0.5f) },
+                    new LightSource { Position = new Vector2(0, 0.5f) }
+                }
+            };
+
+            for (int i = 0; i < 10; i++)
+            {
+                var randomPosition = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-180f, 180f)) * Vector2.right * UnityEngine.Random.Range(0, 4f) + new Vector3(0, 0.5f, 0);
+                //var randomPosition = new Vector2(UnityEngine.Random.Range(-4.9f, 4.9f), UnityEngine.Random.Range(-4f, 5f));
+                collection.Objects.Add(new Puck { Position = randomPosition });
+            }
+
+            return collection;
+        }
 
         public static Simulation Gizmo()
         {

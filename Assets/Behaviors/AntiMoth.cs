@@ -13,7 +13,7 @@ namespace BSim.Behaviors
         private State state = State.Start;
         private float startTime, spinTime, spinSpeed;
         public float Speed { get; set; } = RobotDefaults.Speed;
-        public float LightLevel { get; set; } = 1f;
+        public float LightLevel { get; set; } = 1;
         private IArbiter arbiter;
 
         public void SetArbiter(IArbiter arbiter) => this.arbiter = arbiter;
