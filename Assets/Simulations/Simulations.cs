@@ -25,7 +25,7 @@ namespace BSim.Simulations
                         Position = new Vector2(-3, 0),
                         Behaviors =
                         {
-                            new Gizmo()
+                            new Gizmo() { Gain = 0.25f }
                         }
                     },
                     new LightSource

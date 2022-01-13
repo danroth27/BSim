@@ -25,7 +25,9 @@ public class RobotSensorDisplayController : MonoBehaviour
         {
             var sensors = robot.GetRobotSensors();
 
-            sensorDisplay.text =
+            if (sensors != null)
+            {
+                sensorDisplay.text =
 $@"Left light: {sensors.LeftLightSensor:f2}
 Right light: {sensors.RightLightSensor:f2}
 Left proximity: {sensors.LeftProximitySensor}
@@ -35,6 +37,7 @@ Bumping: {sensors.IsBumping}
 Pushing: {sensors.IsPushing}
 Left wheel speed: {sensors.LeftWheelSpeed:f2}
 Right wheel speed: {sensors.RightWheelSpeed:f2}";
+            }
         }
     }
 

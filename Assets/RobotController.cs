@@ -21,6 +21,8 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     private Toggle fantasyModeToggle;
     private Slider latencySlider;
     private const float wheelSpeedNoise = 0.1f;
+    private Queue<RobotSensors> robotSensorReadings = new Queue<RobotSensors>();
+    private RobotSensors currentSensors;
 
     // Start is called before the first frame update
     private void Awake()
@@ -50,10 +52,14 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     private void FixedUpdate()
     {
+        UpdateRobotSensors();
         var sensors = GetRobotSensors();
-        foreach (var behavior in Behaviors)
+        if (sensors != null)
         {
-            behavior.Update(sensors);
+            foreach (var behavior in Behaviors)
+            {
+                behavior.Update(sensors);
+            }
         }
     }
 
@@ -78,7 +84,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     public float GetWheelSpeedNoise() =>
         fantasyModeToggle.isOn ? 0 : UnityEngine.Random.Range(-wheelSpeedNoise, wheelSpeedNoise);
 
-    public RobotSensors GetRobotSensors()
+    public void UpdateRobotSensors()
     {
         // Bumper
         var contactPoints = new List<ContactPoint2D>();
@@ -93,7 +99,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
         float leftLightSensor = GetLightSensorValue(leftLightSensorPosition, lightSources);
         float rightLightSensor = GetLightSensorValue(rightLightSensorPosition, lightSources);
 
-        return new RobotSensors
+        var sensors = new RobotSensors
         {
             IsBumping = bumping,
             BumperForce = bumperForce,
@@ -105,7 +111,16 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
             RightWheelSpeed = vRight,
             Time = Time.fixedTime
         };
+
+        robotSensorReadings.Enqueue(sensors);
+
+        if (robotSensorReadings.Count > latencySlider.value)
+        {
+            currentSensors = robotSensorReadings.Dequeue();
+        }
     }
+
+    public RobotSensors GetRobotSensors() => currentSensors;
 
     float GetLightSensorValue(Vector3 lightSensorPosition, GameObject[] lightSources)
     {
