@@ -21,11 +21,10 @@ namespace BSim.Behaviors
             var robotCommand = RobotCommand.NoCommand;
             if ((sensors.LeftLightSensor + sensors.RightLightSensor) / 2 > LightMin)
             {
-                var lightDiff = sensors.RightLightSensor - sensors.LeftLightSensor;
                 robotCommand = new RobotCommand
                 {
-                    LeftWheelSpeed = Math.Max(Math.Min(Speed + Gain * lightDiff, 2), -2),
-                    RightWheelSpeed = Math.Max(Math.Min(Speed - Gain * lightDiff, 2), -2)
+                    LeftWheelSpeed = Math.Max(Math.Min(Gain * sensors.RightLightSensor, 2), -2),
+                    RightWheelSpeed = Math.Max(Math.Min(Gain * sensors.LeftLightSensor, 2), -2)
                 };
             }
             arbiter.ExecuteRobotCommand(robotCommand, this);

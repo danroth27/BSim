@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8069697260117540371}
   - component: {fileID: 8069697260117540368}
   - component: {fileID: 8069697260117540460}
+  - component: {fileID: -5922619300730241385}
   m_Layer: 0
   m_Name: Robot
-  m_TagString: Untagged
+  m_TagString: Robot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +140,44 @@ MonoBehaviour:
   leftProximitySensor: {fileID: 9122457706640690188}
   rightProximitySensor: {fileID: 9122457708189219828}
   robotProgrammerPrefab: {fileID: 8019307203808405946, guid: 8cae1bc50dd2df44c9e68e9710eb6731, type: 3}
-  canvas: {fileID: 0}
+--- !u!114 &-5922619300730241385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069697260117540461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000056873ec75eab19d
+  m_ShapePath:
+  - {x: -0.40334916, y: -0.3296218, z: 0}
+  - {x: -0.24172114, y: -0.46414804, z: 0}
+  - {x: 0.002743274, y: -0.51459306, z: 0}
+  - {x: 0.24332732, y: -0.45638728, z: 0}
+  - {x: 0.40722954, y: -0.32186103, z: 0}
+  - {x: 0.49943292, y: -0.15371698, z: 0}
+  - {x: 0.52271533, y: 0.0053789318, z: 0}
+  - {x: 0.48779178, y: 0.2032787, z: 0}
+  - {x: 0.36842573, y: 0.3800668, z: 0}
+  - {x: 0.16571963, y: 0.4981882, z: 0}
+  - {x: -0.020539016, y: 0.5214705, z: 0}
+  - {x: -0.24948192, y: 0.45550388, z: 0}
+  - {x: -0.41110995, y: 0.31021988, z: 0}
+  - {x: -0.48230517, y: 0.17999637, z: 0}
+  - {x: -0.5133483, y: 0.0053789243, z: 0}
+  - {x: -0.4784248, y: -0.16923852, z: 0}
+  m_ShapePathHash: 1449729388
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 38736
 --- !u!1001 &8069697259709333034
 PrefabInstance:
   m_ObjectHideFlags: 0

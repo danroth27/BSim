@@ -96,8 +96,8 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
         // Light sensors
         var lightSources = GameObject.FindGameObjectsWithTag("LightSource");
-        var leftLightSensorPosition = transform.position + Quaternion.Euler(0, 0, 30) * transform.right * robotCollider2D.radius;
-        var rightLightSensorPosition = transform.position + Quaternion.Euler(0, 0, -30) * transform.right * robotCollider2D.radius;
+        var leftLightSensorPosition = transform.position + Quaternion.Euler(0, 0, 30) * transform.right * (robotCollider2D.radius + 0.01f);
+        var rightLightSensorPosition = transform.position + Quaternion.Euler(0, 0, -30) * transform.right * (robotCollider2D.radius + 0.01f);
         float leftLightSensor = GetLightSensorValue(leftLightSensorPosition, lightSources);
         float rightLightSensor = GetLightSensorValue(rightLightSensorPosition, lightSources);
 
@@ -143,7 +143,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
                 lightRaycastHits, 
                 lightSensorVector.magnitude);
 
-            if (!lightRaycastHits.Any(hit => hit.collider.CompareTag("Wall")))
+            if (!lightRaycastHits.Any(hit => hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Robot")))
             {
                 var light = lightSource.GetComponent<Light2D>();
                 lightSensorValue += Mathf.Min(light.intensity / Mathf.Pow(lightSensorVector.magnitude - light.pointLightInnerRadius + 1, 2), light.intensity);
