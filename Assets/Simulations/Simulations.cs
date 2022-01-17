@@ -39,7 +39,7 @@ namespace BSim.Simulations
 
             for (int i = 0; i < 10; i++)
             {
-                var randomPosition = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-180f, 180f)) * Vector2.right * UnityEngine.Random.Range(0, 4f) + new Vector3(0, 0.5f, 0);
+                var randomPosition = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-180f, 180f)) * Vector2.right * UnityEngine.Random.Range(1.5f, 3.5f) + new Vector3(0, 0.5f, 0);
                 //var randomPosition = new Vector2(UnityEngine.Random.Range(-4.9f, 4.9f), UnityEngine.Random.Range(-4f, 5f));
                 collection.Objects.Add(new Puck { Position = randomPosition });
             }
