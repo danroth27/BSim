@@ -34,7 +34,7 @@ namespace BSim
             {
                 executingPriority = priority;
                 executingBehavior = behavior;
-                robotController.ExecuteRobotCommand(command);
+                robotController.ExecuteRobotCommand(command, behavior);
             }
             else if (command == null && behavior == executingBehavior)
             {

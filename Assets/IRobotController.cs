@@ -2,6 +2,6 @@
 {
     public interface IRobotController
     {
-        void ExecuteRobotCommand(RobotCommand command);
+        void ExecuteRobotCommand(RobotCommand command, IBehavior behavior);
     }
 }

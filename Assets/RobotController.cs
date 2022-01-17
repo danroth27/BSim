@@ -23,6 +23,7 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     private const float wheelSpeedNoise = 0.1f;
     private Queue<RobotSensors> robotSensorReadings = new Queue<RobotSensors>();
     private RobotSensors currentSensors;
+    private IBehavior executingBehavior;
 
     // Start is called before the first frame update
     private void Awake()
@@ -73,12 +74,13 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
         Arbiter.SetBehaviorPrioritiesInOrder(Behaviors);
     }
 
-    public void ExecuteRobotCommand(RobotCommand robotCommand)
+    public void ExecuteRobotCommand(RobotCommand robotCommand, IBehavior behavior)
     {
         vLeft = robotCommand.LeftWheelSpeed + GetWheelSpeedNoise();
         vRight = robotCommand.RightWheelSpeed + GetWheelSpeedNoise();
         robotBody.velocity = transform.right * (vLeft + vRight) / 2;
         robotBody.angularVelocity = (vRight - vLeft) * Mathf.Rad2Deg;
+        executingBehavior = behavior;
     }
 
     public float GetWheelSpeedNoise() =>
@@ -121,6 +123,8 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
     }
 
     public RobotSensors GetRobotSensors() => currentSensors;
+
+    public IBehavior GetExecutingBehavior() => executingBehavior;
 
     float GetLightSensorValue(Vector3 lightSensorPosition, GameObject[] lightSources)
     {

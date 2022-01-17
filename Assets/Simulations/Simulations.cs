@@ -11,7 +11,7 @@ namespace BSim.Simulations
             Empty(), Collection(), Gizmo(), London(), BallPit()
         };
 
-        public static Simulation Empty() => new Simulation { Name = "Empty" };
+        public static Simulation Empty() => new Simulation { Name = "Empty", Objects = { new Robot() } };
 
         public static Simulation Collection()
         {
@@ -33,7 +33,6 @@ namespace BSim.Simulations
                             new Escape()
                         }
                     },
-                    new LightSource { Position = new Vector2(0, 0.5f) },
                     new LightSource { Position = new Vector2(0, 0.5f) }
                 }
             };
