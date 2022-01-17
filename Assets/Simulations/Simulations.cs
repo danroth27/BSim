@@ -57,10 +57,7 @@ namespace BSim.Simulations
                     new Robot
                     {
                         Position = new Vector2(-3, 0),
-                        Behaviors =
-                        {
-                            new Gizmo() { Gain = 0.25f }
-                        }
+                        Behaviors = { new Gizmo() }
                     },
                     new LightSource
                     {

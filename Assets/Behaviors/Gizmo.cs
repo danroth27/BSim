@@ -11,7 +11,7 @@ namespace BSim.Behaviors
     {
         public float Speed { get; set; } = RobotDefaults.Speed;
         public float Gain { get; set; } = 1;
-        public float TargetLightLevel { get; set; } = 1;
+        public float TargetLightLevel { get; set; } = 0.5f;
         public float ErrorTolerance { get; set; } = 0.001f;
         private IArbiter arbiter;
 
@@ -24,7 +24,7 @@ namespace BSim.Behaviors
             var lightDiff = TargetLightLevel - avgLightLevel;
             if (Math.Abs(lightDiff) > ErrorTolerance)
             {
-                robotCommand = RobotCommand.Straight(Speed * Gain * lightDiff);
+                robotCommand = RobotCommand.Straight(Math.Min(Math.Max(Speed * Gain * lightDiff, -Speed), Speed));
             }
             arbiter.ExecuteRobotCommand(robotCommand, this);
         }
