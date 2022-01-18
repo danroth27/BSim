@@ -7,7 +7,7 @@ public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
 {
     private BoxCollider2D worldCollider;
     private Vector3 dragOffset;
-    private Camera camera;
+    private Camera eventCamera;
 
     public void Awake()
     {
@@ -17,7 +17,7 @@ public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        camera = eventData.enterEventCamera;
+        eventCamera = eventData.enterEventCamera;
         dragOffset = transform.position - GetMousePosition(eventData);
     }
 
@@ -33,7 +33,7 @@ public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     Vector3 GetMousePosition(PointerEventData eventData)
     {
-        var mousePosition = camera.ScreenToWorldPoint(eventData.position);
+        var mousePosition = eventCamera.ScreenToWorldPoint(eventData.position);
         mousePosition.z = 0;
         return mousePosition;
     }
