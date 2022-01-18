@@ -12,11 +12,13 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
 {
     public GameObject robotPrefab, lightSourcePrefab, puckPrefab, wallPrefab;
     public GameObject simObjects;
-    public RobotSensorDisplayController robotDisplay;
+    public GameObject worldBackground;
+    public RobotPanelController robotPanel;
     public Dropdown simulationSelectorDropdown;
     public Dropdown worldEditorDropdown;
     public Toggle fantasyModeToggle;
     public Slider latencySlider;
+    private GameObject selectedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +31,14 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        
+        if (selectedObject != null && Input.GetKey(KeyCode.Delete))
+        {
+            if (selectedObject.CompareTag("Robot"))
+            {
+                robotPanel.SelectedRobot(null);
+            }
+            GameObject.Destroy(selectedObject);
+        }
     }
 
     public void OnValueChanged(int index)
@@ -71,7 +80,7 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
 
     public void ClearWorld()
     {
-        robotDisplay.SetRobotToDisplay(null);
+        robotPanel.SelectedRobot(null);
         foreach (Transform simObject in simObjects.transform)
         {
             GameObject.Destroy(simObject.gameObject);
@@ -84,7 +93,7 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
     public void LoadRobot(Robot simRobot)
     {
         var robot = LoadSimulationObject(simRobot, robotPrefab).GetComponent<RobotController>();
-        robotDisplay.SetRobotToDisplay(robot);
+        robotPanel.SelectedRobot(robot);
         robot.UpdateBehaviors(simRobot.Behaviors);
     }
 
@@ -98,31 +107,48 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        var mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        mousePosition.z = 0;
-
-        var addToWorld = worldEditorDropdown.options[worldEditorDropdown.value].text;
-        GameObject prefab = null;
-        switch (addToWorld)
+        if (eventData.rawPointerPress == worldBackground)
         {
-            case "Puck":
-                prefab = puckPrefab;
-                break;
-            case "Robot":
-                prefab = robotPrefab;
-                break;
-            case "Light":
-                prefab = lightSourcePrefab;
-                break;
-            case "Wall":
-                prefab = wallPrefab;
-                break;
+            var mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
+            mousePosition.z = 0;
+
+            var addToWorld = worldEditorDropdown.options[worldEditorDropdown.value].text;
+            GameObject prefab = null;
+            switch (addToWorld)
+            {
+                case "Puck":
+                    prefab = puckPrefab;
+                    break;
+                case "Robot":
+                    prefab = robotPrefab;
+                    break;
+                case "Light":
+                    prefab = lightSourcePrefab;
+                    break;
+                case "Wall":
+                    prefab = wallPrefab;
+                    break;
+            }
+
+            if (prefab != null)
+            {
+                var instance = Instantiate(prefab, mousePosition, Quaternion.identity);
+                instance.transform.SetParent(simObjects.transform);
+                SetSelectedOjbect(instance);
+            }
         }
-
-        if (prefab != null)
+        else
         {
-            var instance = Instantiate(prefab, mousePosition, Quaternion.identity);
-            instance.transform.SetParent(simObjects.transform);
+            SetSelectedOjbect(eventData.rawPointerPress);
+        }
+    }
+
+    private void SetSelectedOjbect(GameObject selectedObject)
+    {
+        this.selectedObject = selectedObject;
+        if (selectedObject != null && selectedObject.CompareTag("Robot"))
+        {
+            robotPanel.SelectedRobot(selectedObject.GetComponent<RobotController>());
         }
     }
 }

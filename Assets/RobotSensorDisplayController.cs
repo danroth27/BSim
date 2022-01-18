@@ -20,7 +20,7 @@ public class RobotSensorDisplayController : MonoBehaviour
     {
         if (robot == null)
         {
-            sensorDisplay.text = "No robot to display";
+            sensorDisplay.text = "No robot selected";
         }
         else
         {
@@ -31,7 +31,9 @@ public class RobotSensorDisplayController : MonoBehaviour
             if (sensors != null)
             {
                 sensorDisplay.text =
-$@"Left light: {sensors.LeftLightSensor:f2}
+$@"Robot sensors:
+
+Left light: {sensors.LeftLightSensor:f2}
 Right light: {sensors.RightLightSensor:f2}
 Left proximity: {sensors.LeftProximitySensor}
 Right proximity: {sensors.RightProximitySensor}

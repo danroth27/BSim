@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Canvas
   - Options
+  - Robot
+  - World
   layers:
   - Default
   - TransparentFX

@@ -159,10 +159,11 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (robotProgrammer != null && !eventData.dragging)
+        if (robotProgrammer != null && !eventData.dragging && eventData.clickCount == 2)
         {
             ShowRobotProgrammer();
         }
+        ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
     }
 
     public void OnDestroy()
