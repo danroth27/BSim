@@ -4474,6 +4474,7 @@ MonoBehaviour:
   worldEditorDropdown: {fileID: 987821497}
   fantasyModeToggle: {fileID: 251645765}
   latencySlider: {fileID: 1314695879}
+  selectedColor: {r: 0.6273585, g: 0.9497786, b: 1, a: 1}
 --- !u!4 &1847681645
 Transform:
   m_ObjectHideFlags: 0

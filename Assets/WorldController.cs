@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 
 public class WorldController : MonoBehaviour, IPointerClickHandler, IDragHandler, IPointerDownHandler
@@ -22,6 +23,7 @@ public class WorldController : MonoBehaviour, IPointerClickHandler, IDragHandler
     private Camera eventCamera;
     private Vector3 wallStart;
     private BoxCollider2D worldCollider;
+    public Color selectedColor;
 
     void Awake()
     {
@@ -150,10 +152,30 @@ public class WorldController : MonoBehaviour, IPointerClickHandler, IDragHandler
 
     private void SetSelectedOjbect(GameObject selectedObject)
     {
+        SetColor(this.selectedObject, Color.white);
         this.selectedObject = selectedObject;
+        SetColor(this.selectedObject, selectedColor);
         if (selectedObject != null && selectedObject.CompareTag("Robot"))
         {
             robotPanel.SelectedRobot(selectedObject.GetComponent<RobotController>());
+        }
+
+    }
+
+    private void SetColor(GameObject selectedObject, Color color)
+    {
+        if (selectedObject != null)
+        {
+            var sprite = selectedObject.GetComponent<SpriteRenderer>();
+            if (sprite != null)
+            {
+                sprite.color = color;
+            }
+            var light = selectedObject.GetComponent<Light2D>();
+            if (light != null)
+            {
+                light.color = color;
+            }
         }
     }
 
