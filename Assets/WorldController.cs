@@ -8,7 +8,7 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WorldController : MonoBehaviour, IPointerClickHandler
+public class WorldController : MonoBehaviour, IPointerClickHandler, IDragHandler, IPointerDownHandler
 {
     public GameObject robotPrefab, lightSourcePrefab, puckPrefab, wallPrefab;
     public GameObject simObjects;
@@ -19,6 +19,14 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
     public Toggle fantasyModeToggle;
     public Slider latencySlider;
     private GameObject selectedObject;
+    private Camera eventCamera;
+    private Vector3 wallStart;
+    private BoxCollider2D worldCollider;
+
+    void Awake()
+    {
+        worldCollider = GetComponentInChildren<BoxCollider2D>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -125,9 +133,6 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
                 case "Light":
                     prefab = lightSourcePrefab;
                     break;
-                case "Wall":
-                    prefab = wallPrefab;
-                    break;
             }
 
             if (prefab != null)
@@ -150,5 +155,44 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
         {
             robotPanel.SelectedRobot(selectedObject.GetComponent<RobotController>());
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        var addToWorld = worldEditorDropdown.options[worldEditorDropdown.value].text;
+        if (addToWorld == "Wall")
+        {
+            eventCamera = eventData.enterEventCamera;
+            wallStart = GetMousePosition(eventData);
+            var wall = Instantiate(wallPrefab, wallStart, Quaternion.identity);
+            wall.transform.SetParent(simObjects.transform);
+            var wallScale = wall.transform.localScale;
+            wallScale.x = 0;
+            wall.transform.localScale = wallScale;
+            SetSelectedOjbect(wall);
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        var addToWorld = worldEditorDropdown.options[worldEditorDropdown.value].text;
+        if (addToWorld == "Wall")
+        {
+            var wallEnd = GetMousePosition(eventData);
+            if (worldCollider.OverlapPoint(wallEnd))
+            {
+                selectedObject.transform.SetPositionAndRotation((wallStart + wallEnd) / 2, Quaternion.FromToRotation(Vector3.right, wallEnd - wallStart));
+                var wallScale = selectedObject.transform.localScale;
+                wallScale.x = (wallEnd - wallStart).magnitude;
+                selectedObject.transform.localScale = wallScale;
+            }
+        }
+    }
+
+    private Vector3 GetMousePosition(PointerEventData eventData)
+    {
+        var mousePosition = eventCamera.ScreenToWorldPoint(eventData.position);
+        mousePosition.z = 0;
+        return mousePosition;
     }
 }

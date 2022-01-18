@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
+public class DragAndDrap : MonoBehaviour, IDragHandler, IPointerDownHandler
 {
     private BoxCollider2D worldCollider;
     private Vector3 dragOffset;
@@ -15,7 +15,7 @@ public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
         worldCollider = world.GetComponentInChildren<BoxCollider2D>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         eventCamera = eventData.enterEventCamera;
         dragOffset = transform.position - GetMousePosition(eventData);
@@ -31,7 +31,7 @@ public class DragAndDrap : MonoBehaviour, IDragHandler, IBeginDragHandler
         }
     }
 
-    Vector3 GetMousePosition(PointerEventData eventData)
+    private Vector3 GetMousePosition(PointerEventData eventData)
     {
         var mousePosition = eventCamera.ScreenToWorldPoint(eventData.position);
         mousePosition.z = 0;
