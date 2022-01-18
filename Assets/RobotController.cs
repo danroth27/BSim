@@ -152,11 +152,16 @@ public class RobotController : MonoBehaviour, IRobotController, IProgrammableRob
         return lightSensorValue;
     }
 
+    public void ShowRobotProgrammer()
+    {
+        robotProgrammer.SetActive(true);
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (robotProgrammer != null)
+        if (robotProgrammer != null && !eventData.dragging)
         {
-            robotProgrammer.SetActive(true);
+            ShowRobotProgrammer();
         }
     }
 

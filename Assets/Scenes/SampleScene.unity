@@ -2692,7 +2692,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 987821498}
   m_Template: {fileID: 543710018}
   m_CaptionText: {fileID: 2111192704}
@@ -5389,7 +5389,7 @@ GameObject:
   - component: {fileID: 1847681644}
   m_Layer: 0
   m_Name: World
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5413,6 +5413,7 @@ MonoBehaviour:
   simObjects: {fileID: 736471760}
   robotDisplay: {fileID: 1599829728}
   simulationSelectorDropdown: {fileID: 1855554982}
+  worldEditorDropdown: {fileID: 987821497}
   fantasyModeToggle: {fileID: 251645765}
   latencySlider: {fileID: 1314695879}
 --- !u!4 &1847681645
@@ -6524,7 +6525,7 @@ GameObject:
   - component: {fileID: 2111192705}
   - component: {fileID: 2111192704}
   m_Layer: 5
-  m_Name: Label
+  m_Name: WorldEditorDropdownLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

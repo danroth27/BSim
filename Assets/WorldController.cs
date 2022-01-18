@@ -14,6 +14,7 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
     public GameObject simObjects;
     public RobotSensorDisplayController robotDisplay;
     public Dropdown simulationSelectorDropdown;
+    public Dropdown worldEditorDropdown;
     public Toggle fantasyModeToggle;
     public Slider latencySlider;
 
@@ -99,7 +100,29 @@ public class WorldController : MonoBehaviour, IPointerClickHandler
     {
         var mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
         mousePosition.z = 0;
-        var instance = Instantiate(puckPrefab, mousePosition, Quaternion.identity);
-        instance.transform.SetParent(simObjects.transform);
+
+        var addToWorld = worldEditorDropdown.options[worldEditorDropdown.value].text;
+        GameObject prefab = null;
+        switch (addToWorld)
+        {
+            case "Puck":
+                prefab = puckPrefab;
+                break;
+            case "Robot":
+                prefab = robotPrefab;
+                break;
+            case "Light":
+                prefab = lightSourcePrefab;
+                break;
+            case "Wall":
+                prefab = wallPrefab;
+                break;
+        }
+
+        if (prefab != null)
+        {
+            var instance = Instantiate(prefab, mousePosition, Quaternion.identity);
+            instance.transform.SetParent(simObjects.transform);
+        }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1590848519950248397}
   - component: {fileID: 4138865889299126204}
   - component: {fileID: -8254046043132682433}
+  - component: {fileID: 8370160028291205378}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 
+  m_ApplyToSortingLayers: 00000000056873ec75eab19d
   m_ShapePath:
   - {x: -0.5, y: -0.5, z: 0}
   - {x: 0.5, y: -0.5, z: 0}
@@ -135,4 +136,16 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   m_ShapePathHash: 160822549
   m_Mesh: {fileID: 0}
-  m_InstanceId: 41804
+  m_InstanceId: 68774
+--- !u!114 &8370160028291205378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502776258115051125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b7703254ebe094fbb32808cb6a77d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
