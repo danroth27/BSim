@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class ListViewController : MonoBehaviour
 {
@@ -39,8 +40,9 @@ public class ListViewController : MonoBehaviour
 
     public int SelectedIndex => SelectedListViewItem != null ? SelectedListViewItem.transform.GetSiblingIndex() : -1;
 
-    public void ListItemClicked(GameObject listItem)
+    public void ListItemClicked(PointerEventData eventData)
     {
+        var listItem = eventData.pointerClick;
         if (SelectedListViewItem == null)
         {
             SelectedListViewItem = listItem;

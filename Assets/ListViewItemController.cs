@@ -71,6 +71,6 @@ public class ListViewItemController : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnPointerClick(PointerEventData eventData)
     {
         IsSelected = !IsSelected;
-        listViewController.ListItemClicked(gameObject);
+        listViewController.ListItemClicked(eventData);
     }
 }
