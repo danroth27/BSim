@@ -11,7 +11,7 @@ namespace BSim.Simulations
             Empty(), Collection(), Gizmo(), London(), BallPit()
         };
 
-        public static Simulation Empty() => new Simulation { Name = "Empty", Objects = { new Robot() } };
+        public static Simulation Empty() => new Simulation { Name = "Empty", Objects = { new Robot() { Behaviors = { new Remote() } } } };
 
         public static Simulation Collection()
         {
