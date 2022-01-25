@@ -22,7 +22,7 @@ namespace BSim.Simulations
                 {
                     new Robot
                     {
-                        Position = new Vector2(-3, 0),
+                        Position = new Vector2(-4, -3.6f),
                         Behaviors =
                         {
                             new Cruise(),
