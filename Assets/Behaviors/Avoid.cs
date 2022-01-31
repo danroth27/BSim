@@ -19,8 +19,6 @@ namespace BSim.Behaviors
 
         public void Update(RobotSensors sensors)
         {
-            UnityEngine.Debug.Log($"Avoid state={state}, previousState={previousState}");
-
             RobotCommand robotCommand = RobotCommand.NoCommand;
             if (state == State.Start)
             {

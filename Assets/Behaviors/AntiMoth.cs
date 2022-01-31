@@ -25,7 +25,7 @@ namespace BSim.Behaviors
             {
                 if ((sensors.LeftLightSensor + sensors.RightLightSensor) / 2 > LightLevel)
                 {
-                    spinSpeed = random.Next(2) == 0 ? Speed : -Speed;
+                    spinSpeed = sensors.LeftLightSensor > sensors.RightLightSensor ? Speed : -Speed;
                     startTime = sensors.Time;
                     spinTime = (float) (random.NextDouble() * Math.PI / (2 * Speed));
                     state = State.Spin;

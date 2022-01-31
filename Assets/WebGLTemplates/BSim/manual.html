@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>{{{ PRODUCT_NAME }}} - Manual</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+            <div class="container px-5">
+                <a class="navbar-brand" href="/">BSim</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="manual">Manual</a></li>
+                        <li class="nav-item"><a class="nav-link" href="https://github.com/danroth27/BSim"><i class="fab fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="masthead text-center text-white">
+            <div class="masthead-content">
+                <div class="container px-5">
+                    <h1 class="masthead-heading mb-0">BSim Manual</h1>
+                </div>
+            </div>
+            <div class="bg-circle-1 bg-circle"></div>
+            <div class="bg-circle-2 bg-circle"></div>
+            <div class="bg-circle-3 bg-circle"></div>
+            <div class="bg-circle-4 bg-circle"></div>
+        </header>
+        <section>
+            <div class="container p-5">
+                <p>Welcome to BSim! BSim is simple robot simulator for learning and experimenting with behavior-based programming techniques. BSim is a companion learning tool to <a href="https://www.amazon.com/dp/0071427783">Robot Programming: A Practical Guide to Behavior-Based Robotics</a> by Joseph L. Jones and Daniel Roth.</p>
+
+                <h2 id="using-bsim">Using BSim</h2>                
+                <p>BSim simulates a simple flat world containing lights, walls, and pushable objects along with a programmable robot. You can choose from multiple preconfigured simulations to explore specific principles of behavior-based robotics or you can build your own.</p>
+                
+                <h3 id="simulations">Simulations</h3>
+                <p>Select from any of the prebuilt simulations using the dropdown at the top of the left panel:</p>
+                <ul>
+                    <li><strong>Empty:</strong> An empty world with a single robot that can be controlled using arrow keys on the keyboard.</li>
+                    <li><strong>Collection:</strong> Watch the robot attempt to collect the pucks to the light source.</li>
+                    <li><strong>Gizmo:</strong> "Bright light! Bright light!" The robot will drive towards the light until it gets too bright using a proportional controller. Experiment with the effects of latency and the gain parameter on the Gizmo behavior.</li>
+                    <li><strong>London:</strong> Who knew navigating around the block could be so difficult? See the effects of real world noise on robot navigation.</li>
+                    <li><strong>Ball Pit:</strong> Watch the robot push merrily through a world full of balls (pucks).</li>
+                </ul>
+                
+                <h3 id="run-a-simulation">Run a simulation</h3>
+                <p>You can run a simulation using the buttons just below the simulated world:</p>
+                <ul>
+                    <li><strong>Start:</strong> Start running the current simulation.</li>
+                    <li><strong>Stop:</strong> Stop the simulation.</li>
+                    <li><strong>Step:</strong> Step one time step forward in the current simulation.</li>
+                    <li><strong>Reset:</strong> Reset the current simulation to its initial state.</li>
+                </ul>
+
+                <h3 id="simulation-settings">Simulation settings</h3>
+                <p>You can alter the behavior of the current simulation using various settings shown on the left panel:</p>
+                <ul>
+                    <li><strong>Fantasy Mode:</strong> Enabling Fantasy Mode removes all noise from the robot's movements. Disabling Fantasy Mode adds random noise to the robot's movements to simulate slippage, uneven terrain, etc.</li>
+                    <li><strong>Latency:</strong> The amount of time it takes for the robot to register a sensor reading.</li>
+                </ul>
+
+                <h3 id="modify-the-world">Modify the world</h3>
+                <p>You can tap objects in the simulated world to select them. When an object is selected, it will have a light blue color. You can drag objects to different locations.</p>
+                <p>Press the <kbd>Delete</kbd> key to delete a selected object.</p>
+                <p>You can also add objects to the world by tapping anywhere on the world. Select which type of object you want to add to the world using the lower dropdown on the left pane. To add a Wall, select Wall from the drop down, and then click and drag on the world to position the Wall.</p>
+
+                <h3 id="program-the-robot">Program the robot</h3>
+                <p>To program a robot, tap on the robot to select it. Then tap on the Program Robot button on the right-hand pane to bring up the Robot Programmer dialog. Alternatively,  just double-tap on the robot.</p>
+                <p><img class="shadow-sm" src="images/robot-programmer.png"></p>
+                <p>The Behaviors column shows the set of available behaviors that can be added to the robot's programmable Task. To add a behavior to the robot's Task, select a behavior in the Behaviors list and then tap Add.</p>
+                <p>The Task column shows the ordered behaviors that make up the robot's programmed Task. The order of the behaviors in the Task determine their execution priority from highest to lowest priority. To remove a behavior from the robot's Task, select the behavior you want to remove in the Task column and then tap Remove.</p>
+                <p>Selecting a behavior in the Task column will bring up the Properties pane for that behavior. Each behavior has properties that you can configure.</p>
+                <p>Changes to the robot's programmed Task are applied immediately. When you're done programming the robot, close the dialog.</p>
+
+                <h3 id="robot-behaviors">Robot behaviors</h3>
+                <p>Each robot has a built-in set of behaviors that you can select from and configure to program the robot's Task. Each behavior has behavior-specific properties that you can configure.</p>
+
+                <h4 id="anti-moth-behavior">Anti-Moth</h4>
+                <p>The Anti-Moth behavior triggers when the total light intensity measured by the robot's light sensors exceeds its Light Level parameter, causing the robot to turn away from the light by spinning a random amount to the left or right.</p>
+                <ul>
+                    <li><strong>Light Level:</strong> The average light level registered by the robot's light sensors above which triggers the robot to spin away from the light. <em>Default: 1</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="avoid-behavior">Avoid</h4>
+                <p>The Avoid behavior (give a positive Gain parameter) moves the robot forward and left if the right proximity sensor is on, or forward and right if the left proximity sensor is on. This tends to make the robot avoid obstacles. If Gain is negative, the robot turns towards obstacles. The magnitude of the Gain determines how tightly the robot arcs.</p>
+                <ul>
+                    <li><strong>Gain:</strong> Determines how much and in which direction the robot arcs to avoid (or seek) obstacles. A Gain of 1 or -1 will cause the robot to pivot in place. <em>Default: 1</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="cruise-behavior">Cruise</h4>
+                <p>The Cruise behavior drives the robot wheels at the specified speeds.</p>
+                <ul>
+                    <li><strong>Left Wheel:</strong> The left wheel speed. <em>Default: 2</em></li>
+                    <li><strong>Right Wheel:</strong> The right wheel speed. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="dark-push-behavior">Dark Push</h4>
+                <p>The Dark Push behavior backs up and spins away whenever the robot pushes an object when no light is visible.</p>
+                <ul>
+                    <li><strong>Light Level:</strong> The average light level registered by the robot's light sensors below which triggers the robot to backup and spin away when pushing an object. <em>Default: 0</em></li>
+                    <li><strong>Backup Time:</strong> The amount of time the robot backs up. <em>Default: 0.1s</em></li>
+                    <li><strong>Spin Time:</strong> The amount of time the robot spins after backing up. <em>Default: 0.5s</em></li>
+                    <li><strong>Forward Time:</strong> The amount of time the robot goes forward after backing up and spinning. <em>Default: 0.1s</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="escape-behavior">Escape</h4>
+                <p>The Escape behavior triggers whenever the robot bumps into an obstacle, causing the robot to backup, spin, and go forwards.</p>
+                <ul>
+                    <li><strong>Backup Time:</strong> The amount of time the robot backs up. <em>Default: 0.1s</em></li>
+                    <li><strong>Spin Time:</strong> The amount of time the robot spins after backing up. <em>Default: 0.5s</em></li>
+                    <li><strong>Forward Time:</strong> The amount of time the robot goes forward after backing up and spinning. <em>Default: 0.1s</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="gizmo-behavior">Gizmo</h4>
+                <p>Named after the light-phobic fuzzy critter with the same name, the Gizmo behavior uses a proportional controller to attempt to position the robot such that the average of its light sensor values equals the specified Light Level. If the light is too dark, the robot drives forwards. If the light is too bright, the robot drives backwards.</p>
+                <ul>
+                    <li><strong>Target Light:</strong> The target average light level registered by the robot's light sensors. <em>Default: 0.5</em></li>
+                    <li><strong>Gain:</strong> The gain parameter for the proportional controller. <em>Default: 1</em></li>
+                    <li><strong>Error Tolerance:</strong> The acceptable margin for error from the target light level below which this behavior no longer triggers. <em>Default: 0.001</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="home-behavior">Home</h4>
+                <p>The Home behavior drives the the robot towards a light source.</p>
+                <ul>
+                    <li><strong>Light Min:</strong> The average light level registered by the robot's light sensors above which triggers this behavior. <em>Default: 0.1</em></li>
+                    <li><strong>Gain:</strong> The gain parameter for how strongly the robot arcs towards the light. <em>Default: 10</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="london-behavior">London</h4>
+                <p>The London behavior drives the robot in a square path.</p>
+                <ul>
+                    <li><strong>Length:</strong> The length of the side of the square path. <em>Default: 8</em></li>
+                    <li><strong>Fixed Time Step:</strong> The amount of time in each simulated time step, used to calculate precise turns. <em>Default: 0.02s</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="remote-behavior">Remote</h4>
+                <p>A behavior for controlling the robot using the keyboard arrow keys.</p>
+                <ul>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h4 id="wall-follow-behavior">Wall Follow</h4>
+                <p>The Wall Following behavior uses the robot's proximity sensors to follow a wall.</p>
+                <ul>
+                    <li><strong>Wall Lost:</strong> The length of time after not detecting the wall that the robot gives up on following the wall. <em>Default: 1s</em></li>
+                    <li><strong>Gain:</strong> The gain parameter for how strongly the robot arcs towards the wall. <em>Default: 1</em></li>
+                    <li><strong>Speed:</strong> The speed the robot performs the behavior movements. <em>Default: 2</em></li>
+                </ul>
+
+                <h3 id="robot-sensors">Robot sensors</h3>
+                <p>The sensor values for the last selected robot are displayed on the top of the right panel. Each robot has two forward facing light sensors, two short-range proximity sensors, a force sensitive bump sensor, and wheel odometers. You can also see which robot behavior is currently executing.</p>
+                <ul>
+                    <li><strong>Left light:</strong> The value of the left light sensor.</li>
+                    <li><strong>Right light:</strong> The value of the right light sensor.</li>
+                    <li><strong>Left proximity:</strong> Detects if something is in range of the left proximity sensor.</li>
+                    <li><strong>Right proximity:</strong> Detects if something is in range of the right proximity sensor.</li>
+                    <li><strong>Bumper force:</strong> The force exerted on the bumper sensor.</li>
+                    <li><strong>Bumping:</strong> True if bumping into an immovable object.</li>
+                    <li><strong>Pushing:</strong> True if pushing an object.</li>
+                    <li><strong>Left wheel speed:</strong> The speed of the left wheel.</li>
+                    <li><strong>Right wheel speed:</strong> The speed of the right wheel.</li>
+                    <li><strong>Behavior:</strong> The currently executing behavior.</li>
+                </ul>
+
+            </div>
+          </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-black">
+            <div class="container px-5"><p class="m-0 text-center text-white small">Copyright &copy; Daniel Roth 2022</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
