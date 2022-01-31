@@ -9,7 +9,7 @@ You can get started with BSim at https://behaviorbasedprogramming.com.
 
 ## Giving feedback
 
-If you've hit an issue with BSim, have a question, or have a suggestion for improvement, you can [create an issue](https://github.com/danroth27/bsim) to submit your feedback.
+If you've hit an issue with BSim, have a question, or have a suggestion for improvement, you can [create an issue](https://github.com/danroth27/bsim/issues/new) to submit your feedback.
 
 ## Building BSim
 
