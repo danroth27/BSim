@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>BSim</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+            <div class="container px-5">
+                <a class="navbar-brand" href="./">BSim</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="docs">Docs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="https://github.com/danroth27/BSim"><i class="fab fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="masthead text-center text-white">
+            <div class="masthead-content">
+                <div class="container px-5">
+                    <h1 class="masthead-heading mb-0">BSim</h1>
+                    <h2 class="masthead-subheading mb-0">Behavior-based robot simulator</h2>
+                    <div>
+                        <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #231F20"></canvas>
+                    </div>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="docs">Get started</a>
+                </div>
+            </div>
+            <div class="bg-circle-1 bg-circle"></div>
+            <div class="bg-circle-2 bg-circle"></div>
+            <div class="bg-circle-3 bg-circle"></div>
+            <div class="bg-circle-4 bg-circle"></div>
+        </header>
+        <section>
+            <div class="container p-5">
+                <div class="row gx-5">
+                    <div class="col-lg-4">
+                        <div class="p-5">
+                            <a href="https://www.amazon.com/dp/0071427783"><img class="img-fluid shadow" src="images/book.jpg" alt="..." /></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="p-5">
+                            <h2 class="display-4">Welcome to BSim</h2>
+                            <p>BSim is simple robot simulator for learning and experimenting with behavior-based programming techniques. BSim is a companion learning tool to <a href="https://www.amazon.com/dp/0071427783">Robot Programming: A Practical Guide to Behavior-Based Robotics</a> by Joseph L. Jones and Daniel Roth.</p>
+                            <a class="btn btn-primary btn-xl rounded-pill mt-4" href="https://www.amazon.com/dp/0071427783">Book details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-4">
+                        <div class="p-5"><img class="img-fluid rounded-circle" src="images/joe.jpg" alt="..." /></div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="p-5">
+                            <h2 class="display-4">Joe Jones</h2>
+                            <p>Joe Jones is a veteran roboticist, inventor, author, and entrepreneur. He is the co-author of <em>Mobile Robots: Inspiration to Implementation</em>, as well as numerous technical articles in the field of robotics. He is one of the inventors of the Roomba&reg; Robotic FloorVac, the first widely adopted consumer robot. He is also cofounder and CTO at <a href="https://tertill.com">Tertill</a>, where he architected the world's first solar-powered garden weeding robot.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </section>
+          <section>
+              <div class="container px-5">
+                  <div class="row gx-5 align-items-center">
+                      <div class="col-lg-4">
+                          <div class="p-5"><img class="img-fluid rounded-circle" src="images/dan.jpg" alt="..." /></div>
+                      </div>
+                      <div class="col-lg-8">
+                          <div class="p-5">
+                              <h2 class="display-4">Daniel Roth</h2>
+                              <p>Daniel Roth has a master's degree in computer science from the Massachusetts Institute of Technology, with a specialization in autonomous robot navigation. He helped with the development of the Roomba&reg; Robotic FloorVac while an intern at iRobot. These days he works to pass on his love for robotics to kids as a coach and mentor for robotics teams competing in the FIRST LEGO League competition. When not playing with robots, he works as a Principal Program Manager at Microsoft on the .NET development platform.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-black">
+            <div class="container px-5"><p class="m-0 text-center text-white small">Copyright &copy; Daniel Roth 2022</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="Build/WebGL.loader.js"></script>
+        <script>
+          createUnityInstance(document.querySelector("#unity-canvas"), {
+            dataUrl: "Build/WebGL.data",
+            frameworkUrl: "Build/WebGL.framework.js",
+            codeUrl: "Build/WebGL.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "danroth27",
+            productName: "BSim",
+            productVersion: "0.0.72",
+            // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+            // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+          });
+        </script>
+    </body>
+</html>
